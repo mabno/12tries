@@ -61,10 +61,13 @@
       "guestMessage": "Your progress is saved locally. Sign in to save across devices and compete on the leaderboard!"
     },
     "nickname": {
-      "title": "Choose Your Nickname",
-      "description": "Enter a nickname to appear on the leaderboard and recent attempts",
-      "placeholder": "Enter nickname...",
+      "title": "Welcome! 👋",
+      "description": "Before you start, let us know what we should call you",
+      "placeholder": "Enter your name or nickname...",
       "save": "Start Playing",
+      "betterWithAccount": "💡 Better with an account! Sign in to save your progress across devices and keep your ranking.",
+      "signIn": "Sign In",
+      "continueAsGuest": "Continue as Guest",
       "errors": {
         "empty": "Nickname cannot be empty",
         "tooShort": "Nickname must be at least 2 characters",

@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { validateNickname } from '@/lib/profanity-filter'
 import { User, Sparkles } from 'lucide-react'
+import { signIn } from 'next-auth/react'
+import { GoogleIcon } from '@/components/ui/google-icon'
 
 interface NicknameModalProps {
   isOpen: boolean
@@ -62,7 +64,33 @@ export default function NicknameModal({ isOpen, onSave, onClose }: NicknameModal
           </DialogTitle>
           <DialogDescription className='text-base mt-2 text-center'>{t('description')}</DialogDescription>
         </DialogHeader>
-        <div className='space-y-4 mt-4'>
+
+        {/* Better with account message */}
+        <div className='mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg'>
+          <p className='text-sm text-blue-900 dark:text-blue-100 text-center leading-relaxed'>{t('betterWithAccount')}</p>
+        </div>
+
+        {/* Sign In Button */}
+        <Button
+          onClick={() => signIn('google')}
+          className='w-full bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold border-2 border-gray-200 dark:border-gray-700'
+          size='lg'
+        >
+          <GoogleIcon className='w-5 h-5 mr-2' />
+          {t('signIn')}
+        </Button>
+
+        {/* Divider */}
+        <div className='relative'>
+          <div className='absolute inset-0 flex items-center'>
+            <div className='w-full border-t border-gray-300 dark:border-gray-700' />
+          </div>
+          <div className='relative flex justify-center text-sm'>
+            <span className='px-2 bg-white dark:bg-gray-950 text-gray-500'>{t('continueAsGuest')}</span>
+          </div>
+        </div>
+
+        <div className='space-y-4'>
           <div className='space-y-2'>
             <Input
               type='text'
@@ -79,7 +107,12 @@ export default function NicknameModal({ isOpen, onSave, onClose }: NicknameModal
             />
             {error && <p className='text-sm text-red-500 text-center animate-in fade-in slide-in-from-top-1'>{error}</p>}
           </div>
-          <Button onClick={handleSave} className='w-full' size='lg'>
+          <Button
+            onClick={handleSave}
+            className='w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all'
+            size='lg'
+          >
+            <Sparkles className='w-4 h-4 mr-2' />
             {t('save')}
           </Button>
         </div>

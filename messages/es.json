@@ -61,10 +61,13 @@
       "guestMessage": "Tu progreso se guarda localmente. ¡Inicia sesión para guardar en todos los dispositivos y competir en la tabla de clasificación!"
     },
     "nickname": {
-      "title": "Elige tu Apodo",
-      "description": "Ingresa un apodo para aparecer en la tabla de clasificación y los intentos recientes",
-      "placeholder": "Ingresa tu apodo...",
+      "title": "¡Bienvenido! 👋",
+      "description": "Antes de empezar, cuéntanos cómo deberíamos llamarte",
+      "placeholder": "Ingresa tu nombre o apodo...",
       "save": "Comenzar a Jugar",
+      "betterWithAccount": "💡 ¡Mejor con una cuenta! Inicia sesión para guardar tu progreso en todos los dispositivos y mantener tu clasificación.",
+      "signIn": "Iniciar Sesión",
+      "continueAsGuest": "Continuar como Invitado",
       "errors": {
         "empty": "El apodo no puede estar vacío",
         "tooShort": "El apodo debe tener al menos 2 caracteres",
