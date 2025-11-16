@@ -116,7 +116,7 @@ export default function Header({ locale }: { locale: string }) {
                     <span className='text-sm text-gray-600 dark:text-gray-400'>{t('language') || 'Language'}</span>
                     <LanguageSwitcher />
                   </div>
-                  <div className='flex items-center justify-between px-3'>
+                  <div className='flex items-center justify-between'>
                     <ShareButton />
                   </div>
 

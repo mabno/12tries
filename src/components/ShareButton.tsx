@@ -20,7 +20,7 @@ export default function ShareButton() {
           aria-label={t('button')}
         >
           <Share2 className='h-4 w-4' />
-          <span className='hidden sm:inline'>{t('button')}</span>
+          <span>{t('button')}</span>
         </Button>
       </motion.div>
 
