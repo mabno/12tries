@@ -5,39 +5,69 @@ const MAX_DAILY_ATTEMPTS = 200
 const BAN_DURATION_HOURS = 24
 
 /**
- * Get the real IP address from the request
+ * The fallback IP address to use if the real IP address cannot be determined.
  */
-export function getClientIp(request: NextRequest): string {
-  // Check various headers for the real IP (useful behind proxies/load balancers)
-  const forwarded = request.headers.get('x-forwarded-for')
-  const realIp = request.headers.get('x-real-ip')
-  const cfConnectingIp = request.headers.get('cf-connecting-ip') // Cloudflare
+const FALLBACK_IP_ADDRESS = '0.0.0.0'
 
-  if (forwarded) {
-    // x-forwarded-for can contain multiple IPs, get the first one
-    return forwarded.split(',')[0].trim()
+/**
+ * Returns the real IP address of the client.
+ * @param request - The incoming request.
+ * @param cfProxy - Whether the client is behind a Cloudflare proxy.
+ * @returns The real IP address of the client.
+ */
+export function getClientIp(request: NextRequest, cfProxy = true): string {
+  const headers = request.headers
+
+  // Log all IP-related headers for debugging
+  const headerValues = {
+    'cf-connecting-ip': headers.get('cf-connecting-ip'),
+    'x-real-ip': headers.get('x-real-ip'),
+    'x-forwarded-for': headers.get('x-forwarded-for'),
+    'x-vercel-forwarded-for': headers.get('x-vercel-forwarded-for'),
+    'x-vercel-proxied-for': headers.get('x-vercel-proxied-for'),
+    'request.ip': request.ip,
+  }
+  console.log('[IP] Header values:', headerValues)
+
+  /**
+   * Cloudflare only headers.
+   */
+  if (cfProxy && headers.has('cf-connecting-ip')) {
+    const ip = headers.get('cf-connecting-ip')!
+    console.log(`[IP] Using cf-connecting-ip: ${ip}`)
+    return ip
   }
 
-  if (realIp) {
-    return realIp
+  if (headers.has('x-real-ip')) {
+    const ip = headers.get('x-real-ip')!
+    console.log(`[IP] Using x-real-ip: ${ip}`)
+    return ip
   }
 
-  if (cfConnectingIp) {
-    return cfConnectingIp
+  if (headers.has('x-forwarded-for')) {
+    const ip = headers.get('x-forwarded-for')!
+    console.log(`[IP] Using x-forwarded-for: ${ip}`)
+    return ip
   }
 
-  // Try to get IP from socket (direct connection)
-  try {
-    // @ts-ignore - NextRequest might have ip property in some environments
-    if (request.ip) {
-      return request.ip
-    }
-  } catch (e) {
-    // Ignore errors
+  if (headers.has('x-vercel-forwarded-for')) {
+    const ip = headers.get('x-vercel-forwarded-for')!
+    console.log(`[IP] Using x-vercel-forwarded-for: ${ip}`)
+    return ip
   }
 
-  // Fallback to localhost (for development)
-  return '127.0.0.1'
+  if (headers.has('x-vercel-proxied-for')) {
+    const ip = headers.get('x-vercel-proxied-for')!
+    console.log(`[IP] Using x-vercel-proxied-for: ${ip}`)
+    return ip
+  }
+
+  /**
+   * The fallback IP address.
+   */
+  const fallbackIp = request.ip ?? FALLBACK_IP_ADDRESS
+  console.log(`[IP] Using fallback: ${fallbackIp}`)
+  return fallbackIp
 }
 
 /**

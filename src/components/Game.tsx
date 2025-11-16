@@ -410,33 +410,35 @@ export default function Game({ locale }: GameProps) {
                         }}
                         style={{ width: '50%' }}
                       />
-                      <motion.span
-                        className='text-sm font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider relative z-10'
-                        animate={{
-                          opacity: [0.8, 1, 0.8],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        }}
-                      >
-                        {t('category.label')}
-                      </motion.span>
-                      <motion.span
-                        className='text-base font-black text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 dark:from-purple-400 dark:via-pink-400 dark:to-purple-400 bg-clip-text uppercase tracking-wide relative z-10'
-                        animate={{
-                          backgroundPosition: ['0%', '100%', '0%'],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        }}
-                        style={{ backgroundSize: '200% 100%' }}
-                      >
-                        {category}
-                      </motion.span>
+                      <div className='flex items-center gap-2 flex-wrap justify-center relative z-10'>
+                        <motion.span
+                          className='text-sm font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider'
+                          animate={{
+                            opacity: [0.8, 1, 0.8],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        >
+                          {t('category.label')}
+                        </motion.span>
+                        <motion.span
+                          className='text-base font-black text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 dark:from-purple-400 dark:via-pink-400 dark:to-purple-400 bg-clip-text uppercase tracking-wide'
+                          animate={{
+                            backgroundPosition: ['0%', '100%', '0%'],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: 'linear',
+                          }}
+                          style={{ backgroundSize: '200% 100%' }}
+                        >
+                          {category}
+                        </motion.span>
+                      </div>
                       <motion.span
                         className='text-xl relative z-10'
                         animate={{
