@@ -55,8 +55,8 @@ async function main() {
           gen_random_uuid()::text,
           ${wordData.textEn},
           ${wordData.textEs},
-          ${embeddingEnStr}::vector(1536),
-          ${embeddingEsStr}::vector(1536),
+          ${embeddingEnStr}::vector(3072),
+          ${embeddingEsStr}::vector(3072),
           NOW()
         )
       `

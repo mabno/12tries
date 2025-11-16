@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:update-embeddings": "tsx prisma/update-embeddings.ts",
     "challenge:new": "tsx scripts/new-challenge.ts",
     "challenge:info": "tsx scripts/challenge-info.ts"
   },

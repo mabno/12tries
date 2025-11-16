@@ -20,7 +20,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     const normalizedText = normalizeText(text)
 
     const response = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
+      model: 'text-embedding-3-large',
       input: normalizedText,
     })
 

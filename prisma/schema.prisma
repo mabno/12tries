@@ -72,8 +72,8 @@ model Word {
   id          String                       @id @default(cuid())
   textEn      String                       @unique
   textEs      String                       @unique
-  embedding   Unsupported("vector(1536)")?
-  embeddingEs Unsupported("vector(1536)")?
+  embedding   Unsupported("vector(3072)")?
+  embeddingEs Unsupported("vector(3072)")?
   createdAt   DateTime                     @default(now())
 
   challenges DailyChallenge[]
