@@ -111,7 +111,8 @@
     "scoringTitle": "¿Cómo se calcula la puntuación?",
     "scoringExplanation": "La puntuación se basa en cuántos intentos usaste y qué tan cerca estuviste. Menos intentos y mayor similitud = mejor puntuación. ¡Los jugadores que resuelven el desafío tienen prioridad!",
     "attemptsLabel": "Intentos",
-    "bestMatchLabel": "Mejor Match"
+    "bestMatchLabel": "Mejor Match",
+    "status": "Estado"
   },
   "navigation": {
     "home": "Inicio",
@@ -130,5 +131,19 @@
     "tip": "Consejo:",
     "tipText": "La puntuación de similitud se basa en el significado semántico, no en la ortografía. ¡Las palabras con significados similares obtendrán una puntuación más alta incluso si se escriben de manera diferente!",
     "startPlaying": "¡Comenzar a Jugar!"
+  },
+  "share": {
+    "button": "Compartir",
+    "title": "¡Comparte 12Tries!",
+    "description": "¡Desafía a tus amigos a adivinar la palabra del día!",
+    "copyLink": "Copiar Enlace",
+    "linkCopied": "¡Enlace copiado!",
+    "shareOn": "Compartir en",
+    "suggestion": {
+      "title": "¡Felicitaciones! 🎉",
+      "message": "¿Te gustó el juego? ¡Compártelo con tus amigos!",
+      "shareButton": "Compartir 12Tries",
+      "dismiss": "Ahora no"
+    }
   }
 }

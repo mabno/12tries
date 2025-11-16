@@ -25,6 +25,7 @@ import AttemptsHistory from '@/components/game/AttemptsHistory'
 import WinState from '@/components/game/WinState'
 import FailState from '@/components/game/FailState'
 import LoadingState from '@/components/game/LoadingState'
+import ShareSuggestionPopup from '@/components/ShareSuggestionPopup'
 
 interface Attempt {
   guess: string
@@ -58,6 +59,7 @@ export default function Game({ locale }: GameProps) {
   const [hintError, setHintError] = useState('')
   const [category, setCategory] = useState<string | null>(null)
   const [challengeLoading, setChallengeLoading] = useState(true)
+  const [showShareSuggestion, setShowShareSuggestion] = useState(false)
 
   // Check session status and update anonymous state
   useEffect(() => {
@@ -222,6 +224,26 @@ export default function Game({ locale }: GameProps) {
       if (newSolved) {
         setShowConfetti(true)
         setTimeout(() => setShowConfetti(false), 3000)
+
+        // Check if this is the user's first win and show share suggestion
+        const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
+        if (!hasShownShareSuggestion) {
+          setTimeout(() => {
+            setShowShareSuggestion(true)
+            localStorage.setItem('hasShownShareSuggestion', 'true')
+          }, 2000) // Show after 2 seconds to let confetti settle
+        }
+      }
+
+      // Show share suggestion on loss (no more attempts)
+      if (!newSolved && newRemaining === 0) {
+        const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
+        if (!hasShownShareSuggestion) {
+          setTimeout(() => {
+            setShowShareSuggestion(true)
+            localStorage.setItem('hasShownShareSuggestion', 'true')
+          }, 1500) // Show after 1.5 seconds
+        }
       }
 
       // Shake on very low similarity
@@ -296,6 +318,8 @@ export default function Game({ locale }: GameProps) {
       <Particles className='h-full' quantity={30} color='#a855f7' />
 
       <NicknameModal isOpen={showNicknameModal} onSave={handleNicknameSave} onClose={() => setShowNicknameModal(false)} />
+
+      <ShareSuggestionPopup show={showShareSuggestion} onDismiss={() => setShowShareSuggestion(false)} />
 
       {/* Loading state */}
       {challengeLoading ? (

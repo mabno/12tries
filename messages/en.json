@@ -111,7 +111,8 @@
     "scoringTitle": "How is the score calculated?",
     "scoringExplanation": "The score is based on how many attempts you used and how close you got. Fewer attempts and higher similarity = better score. Players who solve the challenge get priority!",
     "attemptsLabel": "Attempts",
-    "bestMatchLabel": "Best Match"
+    "bestMatchLabel": "Best Match",
+    "status": "Status"
   },
   "navigation": {
     "home": "Home",
@@ -130,5 +131,19 @@
     "tip": "Tip:",
     "tipText": "The similarity score is based on semantic meaning, not spelling. Words with similar meanings will score higher even if they're spelled differently!",
     "startPlaying": "Start Playing!"
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share 12Tries!",
+    "description": "Challenge your friends to guess the word of the day!",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied!",
+    "shareOn": "Share on",
+    "suggestion": {
+      "title": "Congratulations! 🎉",
+      "message": "Enjoyed the game? Share it with your friends!",
+      "shareButton": "Share 12Tries",
+      "dismiss": "Not now"
+    }
   }
 }
