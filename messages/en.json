@@ -1,0 +1,118 @@
+{
+  "app": {
+    "title": "12Tries",
+    "subtitle": "Guess today's word using semantic similarity!",
+    "pageTitle": "12Tries - Daily Word Challenge"
+  },
+  "game": {
+    "title": "Daily Challenge",
+    "placeholder": "Type your guess...",
+    "submit": "Submit Guess",
+    "attemptsLeft": "attempts left",
+    "attemptsCount": "{count}",
+    "noAttemptsLeft": "No attempts left",
+    "solved": "Congratulations! You solved it!",
+    "failed": "Better luck tomorrow!",
+    "comeTomorrow": "Come back tomorrow to complete tomorrow's challenge!",
+    "targetWord": "The Word Was",
+    "attemptsUsed": "Attempts Used",
+    "yourAttempts": "Your Attempts",
+    "similarityLabel": "Similarity",
+    "feedback": "Feedback",
+    "newChallengeIn": "New challenge in",
+    "loading": "Loading challenge...",
+    "thinking": "Thinking...",
+    "correctGuess": "Correct! You got it!",
+    "tryAgain": "Not quite, try again!",
+    "veryClose": "Very close!",
+    "gettingWarmer": "Getting warmer!",
+    "cold": "Cold!",
+    "freezing": "Freezing!",
+    "onFire": "On fire!",
+    "similarity": {
+      "excellent": "Excellent!",
+      "veryClose": "Very Close",
+      "gettingWarmer": "Getting Warmer",
+      "cold": "Cold",
+      "freezing": "Freezing"
+    },
+    "hint": {
+      "title": "💡 Hint",
+      "available": "Hint available at attempt 9",
+      "unlocked": "Hint unlocked!",
+      "button": "Get Hint",
+      "loading": "Generating hint...",
+      "notAvailable": "Make {remaining} more attempts to unlock hint"
+    },
+    "category": {
+      "label": "This word is related to"
+    },
+    "auth": {
+      "playingAsGuest": "Playing as Guest",
+      "guestMessage": "Your progress is saved locally. Sign in to save across devices and compete on the leaderboard!"
+    },
+    "nickname": {
+      "title": "Choose Your Nickname",
+      "description": "Enter a nickname to appear on the leaderboard and recent attempts",
+      "placeholder": "Enter nickname...",
+      "save": "Start Playing",
+      "errors": {
+        "empty": "Nickname cannot be empty",
+        "tooShort": "Nickname must be at least 2 characters",
+        "tooLong": "Nickname must be less than 20 characters",
+        "profanity": "Nickname contains inappropriate language"
+      }
+    },
+    "errors": {
+      "profanity": "Guess contains inappropriate language",
+      "multipleWords": "Please enter only one word",
+      "tooLong": "Word must be 30 characters or less"
+    }
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signInWithGoogle": "Sign in with Google",
+    "pleaseSignIn": "Sign in to save your progress and compete!",
+    "playingAsGuest": "Playing as Guest",
+    "guestMessage": "Your progress is saved locally. Sign in to save across devices and compete on the leaderboard!"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "rank": "Rank",
+    "player": "Player",
+    "today": "Today",
+    "daysAgo": "{days} days ago",
+    "yesterday": "Yesterday",
+    "targetWord": "Target Word",
+    "previous": "Previous",
+    "next": "Next",
+    "score": "Score",
+    "solved": "✓ Solved",
+    "attempted": "Attempted",
+    "topPlayers": "Top 50 Best Attempts",
+    "noEntries": "No entries yet. Be the first to play!",
+    "attempts": "attempts",
+    "similarity": "similarity",
+    "anonymous": "Anonymous",
+    "loading": "Loading leaderboard..."
+  },
+  "navigation": {
+    "home": "Home",
+    "howToPlay": "How to Play",
+    "leaderboard": "Leaderboard",
+    "language": "Language"
+  },
+  "howToPlay": {
+    "title": "How to Play",
+    "rule1": "You have 12 attempts to guess the word of the day",
+    "rule2": "Each guess will show you how similar your word is to the target word",
+    "rule3": "The closer your guess, the 'hotter' the feedback will be",
+    "rule4": "Use semantic similarity to narrow down your guesses",
+    "rule5": "A new word is available every day at midnight",
+    "similarityGuide": "Similarity Guide",
+    "tip": "Tip:",
+    "tipText": "The similarity score is based on semantic meaning, not spelling. Words with similar meanings will score higher even if they're spelled differently!",
+    "startPlaying": "Start Playing!"
+  }
+}

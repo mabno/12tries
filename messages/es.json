@@ -1,0 +1,118 @@
+{
+  "app": {
+    "title": "12Tries",
+    "subtitle": "¡Adivina la palabra de hoy usando similitud semántica!",
+    "pageTitle": "12Tries - Desafío de Palabra Diario"
+  },
+  "game": {
+    "title": "Desafío Diario",
+    "placeholder": "Escribe tu intento...",
+    "submit": "Enviar Intento",
+    "attemptsLeft": "intentos restantes",
+    "attemptsCount": "{count}",
+    "noAttemptsLeft": "No quedan intentos",
+    "solved": "¡Felicitaciones! ¡Lo resolviste!",
+    "failed": "¡Mejor suerte mañana!",
+    "comeTomorrow": "¡Regresa mañana para cumplir el desafío de mañana!",
+    "targetWord": "La Palabra Era",
+    "attemptsUsed": "Intentos Usados",
+    "yourAttempts": "Tus Intentos",
+    "similarityLabel": "Similitud",
+    "feedback": "Retroalimentación",
+    "newChallengeIn": "Nuevo desafío en",
+    "loading": "Cargando desafío...",
+    "thinking": "Pensando...",
+    "correctGuess": "¡Correcto! ¡Lo lograste!",
+    "tryAgain": "¡No del todo, intenta de nuevo!",
+    "veryClose": "¡Muy cerca!",
+    "gettingWarmer": "¡Te estás acercando!",
+    "cold": "¡Frío!",
+    "freezing": "¡Congelado!",
+    "onFire": "¡Ardiendo!",
+    "similarity": {
+      "excellent": "¡Excelente!",
+      "veryClose": "Muy Cerca",
+      "gettingWarmer": "Acercándose",
+      "cold": "Frío",
+      "freezing": "Congelado"
+    },
+    "hint": {
+      "title": "💡 Pista",
+      "available": "Pista disponible en el intento 9",
+      "unlocked": "¡Pista desbloqueada!",
+      "button": "Obtener Pista",
+      "loading": "Generando pista...",
+      "notAvailable": "Haz {remaining} intentos más para desbloquear la pista"
+    },
+    "category": {
+      "label": "Esta palabra está relacionada con"
+    },
+    "auth": {
+      "playingAsGuest": "Jugando como Invitado",
+      "guestMessage": "Tu progreso se guarda localmente. ¡Inicia sesión para guardar en todos los dispositivos y competir en la tabla de clasificación!"
+    },
+    "nickname": {
+      "title": "Elige tu Apodo",
+      "description": "Ingresa un apodo para aparecer en la tabla de clasificación y los intentos recientes",
+      "placeholder": "Ingresa tu apodo...",
+      "save": "Comenzar a Jugar",
+      "errors": {
+        "empty": "El apodo no puede estar vacío",
+        "tooShort": "El apodo debe tener al menos 2 caracteres",
+        "tooLong": "El apodo debe tener menos de 20 caracteres",
+        "profanity": "El apodo contiene lenguaje inapropiado"
+      }
+    },
+    "errors": {
+      "profanity": "El intento contiene lenguaje inapropiado",
+      "multipleWords": "Por favor ingresa solo una palabra",
+      "tooLong": "La palabra debe tener 30 caracteres o menos"
+    }
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión",
+    "signInWithGoogle": "Iniciar sesión con Google",
+    "pleaseSignIn": "¡Inicia sesión para guardar tu progreso y competir!",
+    "playingAsGuest": "Jugando como Invitado",
+    "guestMessage": "Tu progreso se guarda localmente. ¡Inicia sesión para guardar en todos los dispositivos y competir en la tabla de clasificación!"
+  },
+  "leaderboard": {
+    "title": "Tabla de Clasificación",
+    "rank": "Puesto",
+    "player": "Jugador",
+    "today": "Hoy",
+    "daysAgo": "Hace {days} días",
+    "yesterday": "Ayer",
+    "targetWord": "Palabra Objetivo",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "score": "Puntuación",
+    "solved": "✓ Resuelto",
+    "attempted": "Intentó",
+    "topPlayers": "Top 50 Mejores Aproximaciones",
+    "noEntries": "No hay entradas aún. ¡Sé el primero en jugar!",
+    "attempts": "intentos",
+    "similarity": "similitud",
+    "anonymous": "Anónimo",
+    "loading": "Cargando clasificación..."
+  },
+  "navigation": {
+    "home": "Inicio",
+    "howToPlay": "Cómo Jugar",
+    "leaderboard": "Clasificación",
+    "language": "Idioma"
+  },
+  "howToPlay": {
+    "title": "Cómo Jugar",
+    "rule1": "Tienes 12 intentos para adivinar la palabra del día",
+    "rule2": "Cada intento mostrará qué tan similar es tu palabra a la palabra objetivo",
+    "rule3": "Cuanto más cerca esté tu intento, más 'caliente' será la retroalimentación",
+    "rule4": "Usa la similitud semántica para reducir tus opciones",
+    "rule5": "Una nueva palabra está disponible cada día a medianoche",
+    "similarityGuide": "Guía de Similitud",
+    "tip": "Consejo:",
+    "tipText": "La puntuación de similitud se basa en el significado semántico, no en la ortografía. ¡Las palabras con significados similares obtendrán una puntuación más alta incluso si se escriben de manera diferente!",
+    "startPlaying": "¡Comenzar a Jugar!"
+  }
+}

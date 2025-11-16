@@ -1,0 +1,147 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  browserId     String?   @unique // For anonymous users
+  nickname      String?   // For anonymous users
+  isAnonymous   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  attempts      Attempt[]
+  dailyProgress DailyProgress[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Word {
+  id          String                       @id @default(cuid())
+  textEn      String                       @unique
+  textEs      String                       @unique
+  embedding   Unsupported("vector(1536)")?
+  embeddingEs Unsupported("vector(1536)")?
+  createdAt   DateTime                     @default(now())
+
+  challenges DailyChallenge[]
+  attempts   Attempt[]
+
+  @@map("words")
+}
+
+model DailyChallenge {
+  id         String   @id @default(cuid())
+  date       DateTime @unique @default(now()) @db.Date
+  wordId     String
+  hintEn     String?  @db.Text // Cached hint in English
+  hintEs     String?  @db.Text // Cached hint in Spanish
+  categoryEn String?  // Category word to narrow possibilities (English)
+  categoryEs String?  // Category word to narrow possibilities (Spanish)
+  createdAt  DateTime @default(now())
+
+  word          Word            @relation(fields: [wordId], references: [id])
+  dailyProgress DailyProgress[]
+
+  @@map("daily_challenges")
+}
+
+model DailyProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  challengeId     String
+  attemptsCount   Int      @default(0)
+  solved          Boolean  @default(false)
+  lastAttemptAt   DateTime @default(now())
+  bestSimilarity  Float    @default(0)
+  score           Int      @default(0) // Calculated score based on similarity and attempts
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge DailyChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId])
+  @@index([userId, challengeId])
+  @@map("daily_progress")
+}
+
+model Attempt {
+  id          String   @id @default(cuid())
+  userId      String
+  wordId      String
+  guessText   String
+  similarity  Float
+  attemptedAt DateTime @default(now())
+  language    String   @default("en") // 'en' or 'es'
+  ipAddress   String?  // Track IP for rate limiting
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([userId, attemptedAt])
+  @@index([wordId])
+  @@index([ipAddress, attemptedAt])
+  @@map("attempts")
+}
+
+model BannedIp {
+  id        String   @id @default(cuid())
+  ipAddress String   @unique
+  reason    String   @default("Exceeded daily attempt limit")
+  bannedAt  DateTime @default(now())
+  expiresAt DateTime // Ban expires after 24 hours
+
+  @@index([ipAddress, expiresAt])
+  @@map("banned_ips")
+}

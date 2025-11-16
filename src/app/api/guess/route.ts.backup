@@ -1,0 +1,231 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { generateEmbedding, normalizeText } from '@/lib/embeddings'
+import { getTodayUTC } from '@/lib/utils'
+import { validateNickname } from '@/lib/profanity-filter'
+
+const MAX_ATTEMPTS = 10
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await auth()
+    const { guess, locale, attemptsUsed, browserId, nickname } = await request.json()
+
+    if (!guess || typeof guess !== 'string') {
+      return NextResponse.json({ error: 'Invalid guess' }, { status: 400 })
+    }
+
+    const guessText = guess.toLowerCase().trim()
+    
+    // Validate nickname if provided (for anonymous users)
+    if (nickname) {
+      const validation = await validateNickname(nickname)
+      if (!validation.isValid) {
+        return NextResponse.json({ error: validation.error || 'Invalid nickname' }, { status: 400 })
+      }
+    }    // Get today's challenge (UTC)
+    const today = getTodayUTC()
+
+    const challenge = await prisma.dailyChallenge.findFirst({
+      where: {
+        date: today,
+      },
+      include: {
+        word: true,
+      },
+    })
+    console.log(today)
+
+    if (!challenge) {
+      return NextResponse.json({ error: 'No challenge found' }, { status: 404 })
+    }
+
+    // Check for exact match (normalized to ignore accents)
+    const targetWord = locale === 'es' ? challenge.word.textEs : challenge.word.textEn
+    const isCorrect = normalizeText(guessText) === normalizeText(targetWord)
+
+    // Calculate similarity using pgvector
+    const guessEmbedding = await generateEmbedding(guessText)
+    const vectorString = `[${guessEmbedding.join(',')}]`
+
+    // Query similarity using pgvector cosine distance with the correct language embedding
+    const result =
+      locale === 'es'
+        ? await prisma.$queryRaw<Array<{ similarity: number }>>`
+          SELECT 1 - ("embeddingEs"::vector <=> ${vectorString}::vector) as similarity
+          FROM words
+          WHERE id = ${challenge.wordId}
+        `
+        : await prisma.$queryRaw<Array<{ similarity: number }>>`
+          SELECT 1 - (embedding::vector <=> ${vectorString}::vector) as similarity
+          FROM words
+          WHERE id = ${challenge.wordId}
+        `
+
+    const similarity = result[0]?.similarity || 0
+
+    // Handle anonymous users
+    if (!session?.user) {
+      if (!browserId || !nickname) {
+        return NextResponse.json({ error: 'Browser ID and nickname required for anonymous users' }, { status: 400 })
+      }
+
+      // Find or create anonymous user
+      let anonymousUser = await prisma.user.findUnique({
+        where: {
+          browserId: browserId,
+        },
+      })
+
+      if (!anonymousUser) {
+        anonymousUser = await prisma.user.create({
+          data: {
+            browserId: browserId,
+            nickname: nickname,
+            isAnonymous: true,
+          },
+        })
+      } else if (anonymousUser.nickname !== nickname) {
+        // Update nickname if it changed
+        anonymousUser = await prisma.user.update({
+          where: {
+            id: anonymousUser.id,
+          },
+          data: {
+            nickname: nickname,
+          },
+        })
+      }
+
+      // Get or create progress for anonymous user
+      let progress = await prisma.dailyProgress.findUnique({
+        where: {
+          userId_challengeId: {
+            userId: anonymousUser.id,
+            challengeId: challenge.id,
+          },
+        },
+      })
+
+      if (!progress) {
+        progress = await prisma.dailyProgress.create({
+          data: {
+            userId: anonymousUser.id,
+            challengeId: challenge.id,
+          },
+        })
+      }
+
+      // Check if already solved or out of attempts
+      if (progress.solved) {
+        return NextResponse.json({ error: 'Challenge already solved' }, { status: 400 })
+      }
+
+      if (progress.attemptsCount >= MAX_ATTEMPTS) {
+        return NextResponse.json({ error: 'No attempts remaining' }, { status: 400 })
+      }
+
+      // Create attempt record
+      await prisma.attempt.create({
+        data: {
+          userId: anonymousUser.id,
+          wordId: challenge.wordId,
+          guessText,
+          similarity,
+          language: locale || 'en',
+        },
+      })
+
+      // Update progress
+      const newAttemptsCount = progress.attemptsCount + 1
+      const newBestSimilarity = Math.max(progress.bestSimilarity, similarity)
+
+      await prisma.dailyProgress.update({
+        where: {
+          id: progress.id,
+        },
+        data: {
+          attemptsCount: newAttemptsCount,
+          solved: isCorrect,
+          bestSimilarity: newBestSimilarity,
+          lastAttemptAt: new Date(),
+        },
+      })
+
+      return NextResponse.json({
+        correct: isCorrect,
+        similarity,
+        attemptsRemaining: MAX_ATTEMPTS - newAttemptsCount,
+        word: isCorrect ? targetWord : undefined,
+        anonymous: true,
+      })
+    }
+
+    // For authenticated users, save progress
+    let progress = await prisma.dailyProgress.findUnique({
+      where: {
+        userId_challengeId: {
+          userId: session.user.id,
+          challengeId: challenge.id,
+        },
+      },
+    })
+
+    if (!progress) {
+      progress = await prisma.dailyProgress.create({
+        data: {
+          userId: session.user.id,
+          challengeId: challenge.id,
+        },
+      })
+    }
+
+    // Check if already solved or out of attempts
+    if (progress.solved) {
+      return NextResponse.json({ error: 'Challenge already solved' }, { status: 400 })
+    }
+
+    if (progress.attemptsCount >= MAX_ATTEMPTS) {
+      return NextResponse.json({ error: 'No attempts remaining' }, { status: 400 })
+    }
+
+    // Create attempt record
+    await prisma.attempt.create({
+      data: {
+        userId: session.user.id,
+        wordId: challenge.wordId,
+        guessText,
+        similarity,
+        language: locale || 'en',
+      },
+    })
+
+    // Update progress
+    const newAttemptsCount = progress.attemptsCount + 1
+    const newBestSimilarity = Math.max(progress.bestSimilarity, similarity)
+
+    await prisma.dailyProgress.update({
+      where: {
+        id: progress.id,
+      },
+      data: {
+        attemptsCount: newAttemptsCount,
+        solved: isCorrect,
+        bestSimilarity: newBestSimilarity,
+        lastAttemptAt: new Date(),
+      },
+    })
+
+    return NextResponse.json({
+      correct: isCorrect,
+      similarity,
+      attemptsRemaining: MAX_ATTEMPTS - newAttemptsCount,
+      word: isCorrect ? targetWord : undefined,
+      anonymous: false,
+    })
+  } catch (error) {
+    console.error('Error submitting guess:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
