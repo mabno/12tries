@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "12Tries",
-    "subtitle": "Guess today's word using semantic similarity!",
+    "subtitle": "Guess today's word by how close your words are!",
     "pageTitle": "Daily Word Challenge"
   },
   "game": {
@@ -17,7 +17,7 @@
     "targetWord": "The Word Was",
     "attemptsUsed": "Attempts Used",
     "yourAttempts": "Your Attempts",
-    "similarityLabel": "Similarity",
+    "similarityLabel": "Proximity",
     "feedback": "Feedback",
     "newChallengeIn": "New challenge in",
     "loading": "Loading challenge...",
@@ -36,6 +36,10 @@
       "cold": "Cold",
       "freezing": "Freezing"
     },
+    "notTheWord": "Not the word yet!",
+    "keepTrying": "Keep trying!",
+    "gotIt": "Yes! That's the word!",
+    "youWon": "You got it!",
     "hint": {
       "title": "💡 Hint",
       "available": "Hint available at attempt 9",
@@ -106,11 +110,11 @@
     "topPlayers": "Top 50 Best Attempts",
     "noEntries": "No entries yet. Be the first to play!",
     "attempts": "attempts",
-    "similarity": "similarity",
+    "similarity": "proximity",
     "anonymous": "Guest",
     "loading": "Loading leaderboard...",
     "scoringTitle": "How is the score calculated?",
-    "scoringExplanation": "The score is based on how many attempts you used and how close you got. Fewer attempts and higher similarity = better score. Players who solve the challenge get priority!",
+    "scoringExplanation": "The score is based on how many attempts you used and how close you got. Fewer attempts and higher proximity = better score. Players who solve the challenge get priority!",
     "attemptsLabel": "Attempts",
     "bestMatchLabel": "Best Match",
     "status": "Status"
@@ -126,12 +130,13 @@
     "rule1": "You have 12 attempts to guess the word of the day",
     "rule2": "Each guess will show you how similar your word is to the target word",
     "rule3": "The closer your guess, the 'hotter' the feedback will be",
-    "rule4": "Use semantic similarity to narrow down your guesses",
+    "rule4": "Use word proximity to narrow down your guesses",
     "rule5": "A new word is available every day at midnight",
     "similarityGuide": "Similarity Guide",
     "tip": "Tip:",
-    "tipText": "The similarity score is based on semantic meaning, not spelling. Words with similar meanings will score higher even if they're spelled differently!",
-    "startPlaying": "Start Playing!"
+    "tipText": "The proximity score is based on word meanings, not spelling. Words with similar meanings will score higher even if they're spelled differently!",
+    "startPlaying": "Start Playing!",
+    "whatIsProximity": "What is proximity?"
   },
   "share": {
     "button": "Share",
@@ -146,5 +151,20 @@
       "shareButton": "Share 12Tries",
       "dismiss": "Not now"
     }
+  },
+  "semanticExplanation": {
+    "slide1Title": "Semantic Proximity",
+    "slide2Text": "Very Close!",
+    "slide3Text": "Very Different!",
+    "slide4Text": "Super Close!",
+    "slide5Title": "Ready to play?",
+    "slide5Text": "Use the % proximity to find related words. The higher, the closer you are!",
+    "word1": "Dog",
+    "word2": "Cat",
+    "word3": "Car",
+    "word4": "Animal",
+    "previous": "Previous",
+    "next": "Next",
+    "gotIt": "Got it!"
   }
 }

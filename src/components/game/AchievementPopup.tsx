@@ -363,6 +363,33 @@ export default function AchievementPopup({ similarity, isVisible, getFeedbackEmo
                   >
                     {getFeedbackText(similarity)}
                   </motion.h3>
+                  {/* Message indicating result */}
+                  {similarity < 1 ? (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 0.5 }}
+                      className='text-lg font-bold text-gray-700 dark:text-gray-300 mt-2'
+                    >
+                      {t('notTheWord')}
+                      <br />
+                      <span className='text-sm font-semibold'>{t('keepTrying')}</span>
+                    </motion.p>
+                  ) : (
+                    <motion.p
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5, duration: 0.5, type: 'spring', stiffness: 200 }}
+                      className='text-2xl font-black text-green-600 dark:text-green-400 mt-2'
+                      style={{
+                        textShadow: '0 2px 10px rgba(34, 197, 94, 0.3)',
+                      }}
+                    >
+                      {t('gotIt')}
+                      <br />
+                      <span className='text-lg'>{t('youWon')}</span>
+                    </motion.p>
+                  )}
                 </motion.div>
 
                 {/* Similarity percentage */}
@@ -377,7 +404,7 @@ export default function AchievementPopup({ similarity, isVisible, getFeedbackEmo
                   }}
                   className='text-center mb-6'
                 >
-                  <div className='flex items-center justify-center gap-3'>
+                  <div className='flex flex-wrap items-center justify-center gap-3'>
                     <span className={`text-lg font-bold uppercase tracking-wider ${colors.text}`}>{t('similarityLabel')}</span>
                     <motion.div
                       animate={{
@@ -388,7 +415,7 @@ export default function AchievementPopup({ similarity, isVisible, getFeedbackEmo
                         repeat: Infinity,
                         ease: 'easeInOut',
                       }}
-                      className={`text-6xl font-black text-transparent bg-gradient-to-r ${colors.gradient} bg-clip-text`}
+                      className={`text-6xl font-black text-transparent bg-gradient-to-r ${colors.gradient} bg-clip-text whitespace-nowrap`}
                       style={{
                         filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))',
                       }}

@@ -1,21 +1,24 @@
 'use client'
 
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { HelpCircle, Target, TrendingUp, Clock, Trophy, Flame, Snowflake } from 'lucide-react'
+import { HelpCircle, Target, TrendingUp, Clock, Trophy, Flame, Snowflake, Brain } from 'lucide-react'
 import { Particles } from '@/components/ui/particles'
+import SemanticExplanationDialog from '@/components/SemanticExplanationDialog'
 
 export default function HowToPlayPage({ params }: { params: { locale: string } }) {
   const t = useTranslations('howToPlay')
+  const [showSemanticDialog, setShowSemanticDialog] = useState(false)
 
   const rules = [
     { key: 'rule1', icon: Target, color: 'text-blue-500' },
     { key: 'rule2', icon: TrendingUp, color: 'text-green-500' },
     { key: 'rule3', icon: Flame, color: 'text-orange-500' },
-    { key: 'rule4', icon: Snowflake, color: 'text-cyan-500' },
+    { key: 'rule4', icon: Snowflake, color: 'text-cyan-500', hasButton: true },
     { key: 'rule5', icon: Clock, color: 'text-purple-500' },
   ]
 
@@ -67,6 +70,17 @@ export default function HowToPlayPage({ params }: { params: { locale: string } }
                       </div>
                       <div className='flex-1'>
                         <p className='text-lg text-gray-700 dark:text-gray-200'>{t(rule.key as any)}</p>
+                        {rule.hasButton && (
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            onClick={() => setShowSemanticDialog(true)}
+                            className='mt-3 gap-2 border-purple-300 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900/30'
+                          >
+                            <Brain className='h-4 w-4' />
+                            {t('whatIsProximity')}
+                          </Button>
+                        )}
                       </div>
                     </motion.div>
                   )
@@ -146,6 +160,8 @@ export default function HowToPlayPage({ params }: { params: { locale: string } }
           </motion.div>
         </div>
       </main>
+
+      <SemanticExplanationDialog open={showSemanticDialog} onOpenChange={setShowSemanticDialog} />
     </div>
   )
 }

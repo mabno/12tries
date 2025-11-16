@@ -14,8 +14,10 @@ export default function NextChallengeCountdown({ locale = 'en' }: NextChallengeC
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date()
+      // Calculate next midnight UTC
       const tomorrow = new Date(now)
-      tomorrow.setUTCHours(24, 0, 0, 0) // Next midnight UTC
+      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1)
+      tomorrow.setUTCHours(0, 0, 0, 0)
 
       const diff = tomorrow.getTime() - now.getTime()
 

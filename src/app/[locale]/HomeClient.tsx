@@ -13,7 +13,7 @@ export default function HomeClient({ locale }: { locale: string }) {
     <div className='min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-pink-900/20 relative overflow-hidden'>
       {/* Background particles */}
       <div className='fixed inset-0 pointer-events-none'>
-        <Particles className='h-full' quantity={200} color='#a855f7' />
+        <Particles className='h-full' size={0.4} quantity={300} color='#a855f7' />
       </div>
 
       {/* Main content */}
@@ -47,7 +47,7 @@ export default function HomeClient({ locale }: { locale: string }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className='text-lg md:text-xl text-muted-foreground flex items-center justify-center gap-2'
+            className='text-lg md:text-xl  flex items-center justify-center gap-2'
           >
             <Sparkles className='h-5 w-5 text-purple-500' />
             {t('subtitle')}

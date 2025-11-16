@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "12Tries",
-    "subtitle": "¡Adivina la palabra de hoy usando similitud semántica!",
+    "subtitle": "¡Adivina la palabra de hoy según qué tan cerca estén tus palabras!",
     "pageTitle": "Desafío de Palabra Diario"
   },
   "game": {
@@ -17,7 +17,7 @@
     "targetWord": "La Palabra Era",
     "attemptsUsed": "Intentos Usados",
     "yourAttempts": "Tus Intentos",
-    "similarityLabel": "Similitud",
+    "similarityLabel": "Cercanía",
     "feedback": "Retroalimentación",
     "newChallengeIn": "Nuevo desafío en",
     "loading": "Cargando desafío...",
@@ -36,6 +36,10 @@
       "cold": "Frío",
       "freezing": "Congelado"
     },
+    "notTheWord": "¡Aún no es la palabra!",
+    "keepTrying": "¡Sigue intentando!",
+    "gotIt": "¡Sí! ¡Esa era la palabra!",
+    "youWon": "¡Lo lograste!",
     "hint": {
       "title": "💡 Pista",
       "available": "Pista disponible en el intento 9",
@@ -106,11 +110,11 @@
     "topPlayers": "Top 50 Mejores Aproximaciones",
     "noEntries": "No hay entradas aún. ¡Sé el primero en jugar!",
     "attempts": "intentos",
-    "similarity": "similitud",
+    "similarity": "cercanía",
     "anonymous": "Invitado",
     "loading": "Cargando clasificación...",
     "scoringTitle": "¿Cómo se calcula la puntuación?",
-    "scoringExplanation": "La puntuación se basa en cuántos intentos usaste y qué tan cerca estuviste. Menos intentos y mayor similitud = mejor puntuación. ¡Los jugadores que resuelven el desafío tienen prioridad!",
+    "scoringExplanation": "La puntuación se basa en cuántos intentos usaste y qué tan cerca estuviste. Menos intentos y mayor cercanía = mejor puntuación. ¡Los jugadores que resuelven el desafío tienen prioridad!",
     "attemptsLabel": "Intentos",
     "bestMatchLabel": "Mejor Match",
     "status": "Estado"
@@ -126,12 +130,13 @@
     "rule1": "Tienes 12 intentos para adivinar la palabra del día",
     "rule2": "Cada intento mostrará qué tan similar es tu palabra a la palabra objetivo",
     "rule3": "Cuanto más cerca esté tu intento, más 'caliente' será la retroalimentación",
-    "rule4": "Usa la similitud semántica para reducir tus opciones",
+    "rule4": "Usa la cercanía de las palabras para reducir tus opciones",
     "rule5": "Una nueva palabra está disponible cada día a medianoche",
     "similarityGuide": "Guía de Similitud",
     "tip": "Consejo:",
-    "tipText": "La puntuación de similitud se basa en el significado semántico, no en la ortografía. ¡Las palabras con significados similares obtendrán una puntuación más alta incluso si se escriben de manera diferente!",
-    "startPlaying": "¡Comenzar a Jugar!"
+    "tipText": "La puntuación de cercanía se basa en el significado de las palabras, no en la ortografía. ¡Las palabras con significados similares obtendrán una puntuación más alta incluso si se escriben de manera diferente!",
+    "startPlaying": "¡Comenzar a Jugar!",
+    "whatIsProximity": "¿Qué es cercanía?"
   },
   "share": {
     "button": "Compartir",
@@ -146,5 +151,20 @@
       "shareButton": "Compartir 12Tries",
       "dismiss": "Ahora no"
     }
+  },
+  "semanticExplanation": {
+    "slide1Title": "Cercanía Semántica",
+    "slide2Text": "¡Muy Cercanos!",
+    "slide3Text": "¡Muy Diferentes!",
+    "slide4Text": "¡Súper Cercanos!",
+    "slide5Title": "¿Listo para jugar?",
+    "slide5Text": "Usa el % de cercanía para encontrar palabras relacionadas. ¡Cuanto más alto, más cerca estás!",
+    "word1": "Perro",
+    "word2": "Gato",
+    "word3": "Auto",
+    "word4": "Animal",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "gotIt": "¡Entendido!"
   }
 }

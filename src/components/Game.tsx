@@ -26,6 +26,7 @@ import WinState from '@/components/game/WinState'
 import FailState from '@/components/game/FailState'
 import LoadingState from '@/components/game/LoadingState'
 import ShareSuggestionPopup from '@/components/ShareSuggestionPopup'
+import SemanticExplanationDialog from '@/components/SemanticExplanationDialog'
 
 interface Attempt {
   guess: string
@@ -60,6 +61,7 @@ export default function Game({ locale }: GameProps) {
   const [category, setCategory] = useState<string | null>(null)
   const [challengeLoading, setChallengeLoading] = useState(true)
   const [showShareSuggestion, setShowShareSuggestion] = useState(false)
+  const [showSemanticExplanation, setShowSemanticExplanation] = useState(false)
 
   // Check session status and update anonymous state
   useEffect(() => {
@@ -222,10 +224,23 @@ export default function Game({ locale }: GameProps) {
         }, 500)
       }, 4000)
 
-      // Show confetti on win
+      // Show semantic explanation after first attempt (only once per user)
+      if (newAttempts.length === 1) {
+        const hasSeenExplanation = localStorage.getItem('hasSeenSemanticExplanation')
+        if (!hasSeenExplanation) {
+          setTimeout(() => {
+            setShowSemanticExplanation(true)
+            localStorage.setItem('hasSeenSemanticExplanation', 'true')
+          }, 4500) // Show after the popup closes
+        }
+      }
+
+      // Show confetti on win - after popup closes
       if (newSolved) {
-        setShowConfetti(true)
-        setTimeout(() => setShowConfetti(false), 3000)
+        setTimeout(() => {
+          setShowConfetti(true)
+          setTimeout(() => setShowConfetti(false), 3000)
+        }, 4000) // Start confetti when popup starts closing
 
         // Check if this is the user's first win and show share suggestion
         const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
@@ -328,6 +343,8 @@ export default function Game({ locale }: GameProps) {
       />
 
       <ShareSuggestionPopup show={showShareSuggestion} onDismiss={() => setShowShareSuggestion(false)} />
+
+      <SemanticExplanationDialog open={showSemanticExplanation} onOpenChange={setShowSemanticExplanation} />
 
       {/* Loading state */}
       {challengeLoading ? (
