@@ -2,7 +2,7 @@
   "app": {
     "title": "12Tries",
     "subtitle": "Guess today's word using semantic similarity!",
-    "pageTitle": "12Tries - Daily Word Challenge"
+    "pageTitle": "Daily Word Challenge"
   },
   "game": {
     "title": "Daily Challenge",

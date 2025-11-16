@@ -265,8 +265,35 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                       </span>
                                     )}
                                   </div>
-                                  <div className='text-sm text-gray-600 dark:text-gray-400'>
-                                    {entry.attempts} {t('attempts')} · {(entry.bestSimilarity * 100).toFixed(1)}% {t('similarity')}
+                                  <div className='flex items-center gap-2 mt-1'>
+                                    <motion.span
+                                      className='inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 border border-blue-300 dark:border-blue-700 rounded-full text-xs font-bold text-blue-700 dark:text-blue-300 shadow-sm'
+                                      initial={{ opacity: 0, scale: 0, x: -20 }}
+                                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                                      transition={{
+                                        delay: index * 0.08 + 0.35,
+                                        type: 'spring',
+                                        stiffness: 300,
+                                        damping: 15,
+                                      }}
+                                      whileHover={{ scale: 1.1, y: -2 }}
+                                    >
+                                      {entry.attempts} {t('attempts')}
+                                    </motion.span>
+                                    <motion.span
+                                      className='inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border border-purple-300 dark:border-purple-700 rounded-full text-xs font-bold text-purple-700 dark:text-purple-300 shadow-sm'
+                                      initial={{ opacity: 0, scale: 0, x: -20 }}
+                                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                                      transition={{
+                                        delay: index * 0.08 + 0.4,
+                                        type: 'spring',
+                                        stiffness: 300,
+                                        damping: 15,
+                                      }}
+                                      whileHover={{ scale: 1.1, y: -2 }}
+                                    >
+                                      {(entry.bestSimilarity * 100).toFixed(1)}% {t('similarity')}
+                                    </motion.span>
                                   </div>
                                 </div>
                               </div>

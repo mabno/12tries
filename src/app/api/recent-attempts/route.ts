@@ -5,6 +5,11 @@ export async function GET(req: NextRequest) {
   try {
     // Obtener los últimos 20 intentos de usuarios con información relacionada
     const recentAttempts = await prisma.attempt.findMany({
+      where: {
+        similarity: {
+          lt: 0.7,
+        },
+      },
       take: 20,
       orderBy: {
         attemptedAt: 'desc',

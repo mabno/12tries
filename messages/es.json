@@ -2,7 +2,7 @@
   "app": {
     "title": "12Tries",
     "subtitle": "¡Adivina la palabra de hoy usando similitud semántica!",
-    "pageTitle": "12Tries - Desafío de Palabra Diario"
+    "pageTitle": "Desafío de Palabra Diario"
   },
   "game": {
     "title": "Desafío Diario",
