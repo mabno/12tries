@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Trophy, Medal, Award, Crown, Star, ArrowLeft } from 'lucide-react'
+import { Trophy, Medal, Award, Crown, Star, ArrowLeft, Info, Target, Zap } from 'lucide-react'
 import { Particles } from '@/components/ui/particles'
 import { SparklesText } from '@/components/ui/sparkles-text'
 
@@ -84,53 +84,72 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
             <div className='absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-purple-500/5' />
 
             <CardHeader className='relative bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-sm'>
-              <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
-                <div className='flex flex-col gap-1'>
-                  <CardTitle className='text-2xl md:text-3xl font-bold flex items-center gap-3'>
-                    <Trophy className='h-6 w-6 md:h-8 md:w-8 text-yellow-500' />
-                    {t('title')}
-                  </CardTitle>
-                  <p className='text-sm text-gray-600 dark:text-gray-400 ml-10 md:ml-11'>{t('topPlayers')}</p>
+              <div className='flex flex-col gap-4'>
+                {/* Header Title */}
+                <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'>
+                  <div className='flex flex-col gap-1'>
+                    <CardTitle className='text-2xl md:text-3xl font-bold flex items-center gap-3'>
+                      <Trophy className='h-6 w-6 md:h-8 md:w-8 text-yellow-500' />
+                      {t('title')}
+                    </CardTitle>
+                    <p className='text-sm text-gray-600 dark:text-gray-400 ml-10 md:ml-11'>{t('topPlayers')}</p>
+                  </div>
+
+                  {/* Date navigation */}
+                  <motion.div
+                    className='flex items-center gap-2 justify-center md:justify-end'
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => setDaysAgo(Math.min(daysAgo + 1, 5))}
+                        disabled={daysAgo >= 5}
+                        className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
+                      >
+                        <ArrowLeft className='h-3 w-3 md:h-4 md:w-4' />
+                        <span className='hidden sm:inline'>{t('previous')}</span>
+                      </Button>
+                    </motion.div>
+                    <motion.div
+                      className='px-3 md:px-4 py-2 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-purple-900/40 rounded-xl font-bold min-w-[100px] md:min-w-[140px] text-center text-purple-900 dark:text-purple-100 shadow-lg border-2 border-purple-200 dark:border-purple-800 text-sm md:text-base'
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                    >
+                      {getDateLabel()}
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => setDaysAgo(Math.max(daysAgo - 1, 0))}
+                        disabled={daysAgo === 0}
+                        className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
+                      >
+                        <span className='hidden sm:inline'>{t('next')}</span>
+                        <ArrowLeft className='h-3 w-3 md:h-4 md:w-4 rotate-180' />
+                      </Button>
+                    </motion.div>
+                  </motion.div>
                 </div>
 
-                {/* Date navigation */}
+                {/* Scoring explanation */}
                 <motion.div
-                  className='flex items-center gap-2 justify-center md:justify-end'
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className='p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
                 >
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button
-                      variant='outline'
-                      size='sm'
-                      onClick={() => setDaysAgo(Math.min(daysAgo + 1, 5))}
-                      disabled={daysAgo >= 5}
-                      className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
-                    >
-                      <ArrowLeft className='h-3 w-3 md:h-4 md:w-4' />
-                      <span className='hidden sm:inline'>{t('previous')}</span>
-                    </Button>
-                  </motion.div>
-                  <motion.div
-                    className='px-3 md:px-4 py-2 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-purple-900/40 rounded-xl font-bold min-w-[100px] md:min-w-[140px] text-center text-purple-900 dark:text-purple-100 shadow-lg border-2 border-purple-200 dark:border-purple-800 text-sm md:text-base'
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                  >
-                    {getDateLabel()}
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button
-                      variant='outline'
-                      size='sm'
-                      onClick={() => setDaysAgo(Math.max(daysAgo - 1, 0))}
-                      disabled={daysAgo === 0}
-                      className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
-                    >
-                      <span className='hidden sm:inline'>{t('next')}</span>
-                      <ArrowLeft className='h-3 w-3 md:h-4 md:w-4 rotate-180' />
-                    </Button>
-                  </motion.div>
+                  <div className='flex items-start gap-2'>
+                    <Info className='h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5' />
+                    <div className='flex-1'>
+                      <h3 className='text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1'>{t('scoringTitle')}</h3>
+                      <p className='text-xs text-blue-700 dark:text-blue-300 leading-relaxed'>{t('scoringExplanation')}</p>
+                    </div>
+                  </div>
                 </motion.div>
               </div>
 
@@ -203,7 +222,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
               )}
 
               {!loading && !error && leaderboard.length > 0 && (
-                <div className='space-y-3'>
+                <div className='space-y-2'>
                   {leaderboard.map((entry, index) => (
                     <motion.div
                       key={index}
@@ -223,17 +242,31 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                       }}
                       style={{ transformPerspective: 1000 }}
                     >
-                      <Card className={`border-2 bg-gradient-to-r ${getRankColor(entry.rank)} transition-all hover:shadow-2xl`}>
-                        <CardContent className='p-3 sm:p-4'>
-                          <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4'>
-                            <div className='flex items-center gap-2 sm:gap-4 w-full sm:w-auto'>
+                      <Card className={`border bg-gradient-to-r ${getRankColor(entry.rank)} transition-all hover:shadow-lg`}>
+                        <CardContent className='p-0'>
+                          {/* Layout: Position | Content */}
+                          <div className='flex items-stretch'>
+                            {/* Position Column */}
+                            <motion.div
+                              className='flex flex-col items-center justify-center w-14 sm:w-16 bg-gradient-to-b from-gray-900/5 to-gray-900/10 dark:from-white/5 dark:to-white/10 border-r-2 border-gray-900/10 dark:border-white/10 flex-shrink-0'
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                delay: index * 0.05,
+                                type: 'spring',
+                                stiffness: 300,
+                                damping: 15,
+                              }}
+                            >
+                              {/* Rank number */}
+                              <span className='text-2xl sm:text-3xl font-black text-gray-800 dark:text-gray-100'>{entry.rank}</span>
                               {/* Rank icon */}
                               <motion.div
-                                className='flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-lg flex-shrink-0'
+                                className='mt-0.5'
                                 initial={{ scale: 0, rotate: -180 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{
-                                  delay: index * 0.08 + 0.2,
+                                  delay: index * 0.05 + 0.15,
                                   type: 'spring',
                                   stiffness: 300,
                                   damping: 15,
@@ -241,103 +274,138 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                               >
                                 {getRankIcon(entry.rank)}
                               </motion.div>
+                            </motion.div>
 
-                              {/* Player info */}
-                              <div className='flex items-center gap-2 sm:gap-3 flex-1 min-w-0'>
-                                {entry.image ? (
-                                  <img
-                                    src={entry.image}
-                                    alt={entry.name}
-                                    className='h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-purple-300 dark:border-purple-700 flex-shrink-0'
-                                  />
-                                ) : (
-                                  <div className='h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0'>
-                                    {entry.name[0]?.toUpperCase()}
-                                  </div>
-                                )}
-                                <div className='flex-1 min-w-0'>
-                                  <div className='flex items-center gap-1.5 sm:gap-2 flex-wrap'>
-                                    <span className='font-bold text-sm sm:text-base text-gray-700 dark:text-gray-200'>#{entry.rank}</span>
-                                    <span className='font-semibold text-base sm:text-lg text-gray-900 dark:text-white truncate'>
-                                      {entry.name}
-                                    </span>
-                                    {entry.isAnonymous && (
-                                      <span className='text-xs px-1.5 sm:px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full border border-amber-300 dark:border-amber-700 font-medium whitespace-nowrap'>
-                                        {t('anonymous')}
+                            {/* Content Column */}
+                            <div className='flex-1 p-2.5 sm:p-3'>
+                              <div className='flex flex-col gap-2'>
+                                {/* Top Row: Avatar, Name, Stats */}
+                                <div className='flex items-center gap-2 sm:gap-3'>
+                                  {/* Avatar */}
+                                  {entry.image ? (
+                                    <img
+                                      src={entry.image}
+                                      alt={entry.name}
+                                      className='h-9 w-9 sm:h-10 sm:w-10 rounded-full border-2 border-purple-300 dark:border-purple-700 flex-shrink-0'
+                                    />
+                                  ) : (
+                                    <div className='h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'>
+                                      {entry.name[0]?.toUpperCase()}
+                                    </div>
+                                  )}
+
+                                  {/* Name and Status */}
+                                  <div className='flex-1 min-w-0'>
+                                    <div className='flex items-center gap-1.5 flex-wrap'>
+                                      <span className='font-semibold text-sm sm:text-base text-gray-900 dark:text-white truncate'>
+                                        {entry.name}
                                       </span>
-                                    )}
-                                  </div>
-                                  <div className='flex items-center gap-1.5 sm:gap-2 mt-1 flex-wrap'>
-                                    <motion.span
-                                      className='inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 border border-blue-300 dark:border-blue-700 rounded-full text-xs font-bold text-blue-700 dark:text-blue-300 shadow-sm whitespace-nowrap'
-                                      initial={{ opacity: 0, scale: 0, x: -20 }}
-                                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                                      transition={{
-                                        delay: index * 0.08 + 0.35,
-                                        type: 'spring',
-                                        stiffness: 300,
-                                        damping: 15,
-                                      }}
-                                      whileHover={{ scale: 1.1, y: -2 }}
+                                      {entry.isAnonymous && (
+                                        <span className='text-[10px] px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full border border-amber-300 dark:border-amber-700 font-medium'>
+                                          {t('anonymous')}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {/* Status */}
+                                    <motion.div
+                                      className={`text-[10px] sm:text-xs font-semibold flex items-center gap-1 mt-0.5 ${
+                                        entry.solved ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'
+                                      }`}
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      transition={{ delay: index * 0.05 + 0.2 }}
                                     >
-                                      {entry.attempts} {t('attempts')}
-                                    </motion.span>
-                                    <motion.span
-                                      className='inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border border-purple-300 dark:border-purple-700 rounded-full text-xs font-bold text-purple-700 dark:text-purple-300 shadow-sm whitespace-nowrap'
-                                      initial={{ opacity: 0, scale: 0, x: -20 }}
-                                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                                      transition={{
-                                        delay: index * 0.08 + 0.4,
-                                        type: 'spring',
-                                        stiffness: 300,
-                                        damping: 15,
-                                      }}
-                                      whileHover={{ scale: 1.1, y: -2 }}
-                                    >
-                                      {(entry.bestSimilarity * 100).toFixed(1)}% {t('similarity')}
-                                    </motion.span>
+                                      {entry.solved ? (
+                                        <>
+                                          <Trophy className='h-3 w-3' />
+                                          {t('solved')}
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Target className='h-3 w-3' />
+                                          {t('attempted')}
+                                        </>
+                                      )}
+                                    </motion.div>
                                   </div>
+
+                                  {/* Score badge - Desktop */}
+                                  <motion.div
+                                    className='hidden sm:flex flex-col items-center gap-0.5'
+                                    initial={{ scale: 0, rotate: 180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{
+                                      delay: index * 0.05 + 0.15,
+                                      type: 'spring',
+                                      stiffness: 300,
+                                      damping: 15,
+                                    }}
+                                  >
+                                    <span className='text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide'>
+                                      {t('score')}
+                                    </span>
+                                    <div className='px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-bold text-base shadow-md cursor-pointer hover:scale-105 transition-transform'>
+                                      {entry.score}
+                                    </div>
+                                  </motion.div>
+                                </div>
+
+                                {/* Stats Row - Compact */}
+                                <div className='grid grid-cols-3 gap-1.5 sm:gap-2'>
+                                  {/* Attempts */}
+                                  <motion.div
+                                    className='flex items-center justify-between p-1.5 sm:p-2 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded'
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: index * 0.05 + 0.2 }}
+                                    whileHover={{ scale: 1.02 }}
+                                  >
+                                    <div className='flex items-center gap-1'>
+                                      <Target className='h-3 w-3 text-blue-600 dark:text-blue-400 flex-shrink-0' />
+                                      <span className='text-[10px] font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide'>
+                                        {t('attemptsLabel')}
+                                      </span>
+                                    </div>
+                                    <span className='text-sm font-bold text-blue-900 dark:text-blue-100'>{entry.attempts}</span>
+                                  </motion.div>
+
+                                  {/* Best Similarity */}
+                                  <motion.div
+                                    className='flex items-center justify-between p-1.5 sm:p-2 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded'
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: index * 0.05 + 0.25 }}
+                                    whileHover={{ scale: 1.02 }}
+                                  >
+                                    <div className='flex items-center gap-1'>
+                                      <Zap className='h-3 w-3 text-purple-600 dark:text-purple-400 flex-shrink-0' />
+                                      <span className='text-[10px] font-semibold text-purple-700 dark:text-purple-300 uppercase tracking-wide'>
+                                        {t('bestMatchLabel')}
+                                      </span>
+                                    </div>
+                                    <span className='text-sm font-bold text-purple-900 dark:text-purple-100'>
+                                      {(entry.bestSimilarity * 100).toFixed(1)}%
+                                    </span>
+                                  </motion.div>
+
+                                  {/* Score - Mobile */}
+                                  <motion.div
+                                    className='flex sm:hidden items-center justify-between p-1.5 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 border border-pink-200 dark:border-pink-800 rounded'
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: index * 0.05 + 0.3 }}
+                                    whileHover={{ scale: 1.02 }}
+                                  >
+                                    <div className='flex items-center gap-1'>
+                                      <Trophy className='h-3 w-3 text-pink-600 dark:text-pink-400 flex-shrink-0' />
+                                      <span className='text-[10px] font-semibold text-pink-700 dark:text-pink-300 uppercase tracking-wide'>
+                                        {t('score')}
+                                      </span>
+                                    </div>
+                                    <span className='text-sm font-bold text-pink-900 dark:text-pink-100'>{entry.score}</span>
+                                  </motion.div>
                                 </div>
                               </div>
-                            </div>
-
-                            {/* Score badge */}
-                            <div className='flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:gap-1 w-full sm:w-auto justify-between sm:justify-start'>
-                              <motion.div
-                                className='px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-bold text-base sm:text-lg shadow-lg'
-                                initial={{ scale: 0, rotate: 180 }}
-                                animate={{ scale: 1, rotate: 0 }}
-                                transition={{
-                                  delay: index * 0.08 + 0.3,
-                                  type: 'spring',
-                                  stiffness: 300,
-                                  damping: 15,
-                                }}
-                                whileHover={{
-                                  scale: 1.1,
-                                  rotate: [0, -5, 5, -5, 0],
-                                  transition: { duration: 0.5 },
-                                }}
-                              >
-                                {entry.score}
-                              </motion.div>
-                              <motion.span
-                                className={`text-xs font-semibold flex items-center gap-1 ${
-                                  entry.solved ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'
-                                }`}
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.08 + 0.4 }}
-                              >
-                                {entry.solved ? (
-                                  <>
-                                    <Trophy className='h-3 w-3' />
-                                    {t('solved')}
-                                  </>
-                                ) : (
-                                  <span>{t('attempted')}</span>
-                                )}
-                              </motion.span>
                             </div>
                           </div>
                         </CardContent>

@@ -76,7 +76,7 @@
       }
     },
     "errors": {
-      "profanity": "El intento contiene lenguaje inapropiado",
+      "profanity": "El intento contiene lenguaje inapropiado (no te hagas el canchero flaco)",
       "multipleWords": "Por favor ingresa solo una palabra",
       "tooLong": "La palabra debe tener 30 caracteres o menos"
     }
@@ -106,8 +106,12 @@
     "noEntries": "No hay entradas aún. ¡Sé el primero en jugar!",
     "attempts": "intentos",
     "similarity": "similitud",
-    "anonymous": "Anónimo",
-    "loading": "Cargando clasificación..."
+    "anonymous": "Invitado",
+    "loading": "Cargando clasificación...",
+    "scoringTitle": "¿Cómo se calcula la puntuación?",
+    "scoringExplanation": "La puntuación se basa en cuántos intentos usaste y qué tan cerca estuviste. Menos intentos y mayor similitud = mejor puntuación. ¡Los jugadores que resuelven el desafío tienen prioridad!",
+    "attemptsLabel": "Intentos",
+    "bestMatchLabel": "Mejor Match"
   },
   "navigation": {
     "home": "Inicio",

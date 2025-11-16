@@ -16,10 +16,10 @@ function calculateScore(bestSimilarity: number, attemptsCount: number): number {
 
   if (attemptsCount <= 8) {
     // Gentle exponential growth for attempts 1-8
-    attemptPenalty = Math.pow(attemptsCount, 2.2) * 0.5
+    attemptPenalty = Math.pow(attemptsCount, 2.2)
   } else {
     // Moderate exponential penalty after hint becomes available (attempt 9+)
-    const baseAttempt8Penalty = Math.pow(8, 2.2) * 0.5
+    const baseAttempt8Penalty = Math.pow(8, 2.2)
     const additionalAttempts = attemptsCount - 8
     attemptPenalty = baseAttempt8Penalty + Math.pow(additionalAttempts, 2.3) * 30
   }
