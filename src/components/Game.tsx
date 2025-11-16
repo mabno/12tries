@@ -187,6 +187,8 @@ export default function Game({ locale }: GameProps) {
 
       if (!response.ok) {
         setError(data.error || 'An error occurred')
+        setShake(true)
+        setTimeout(() => setShake(false), 500)
         setLoading(false)
         return
       }
@@ -317,7 +319,13 @@ export default function Game({ locale }: GameProps) {
       {showConfetti && <Confetti />}
       <Particles className='h-full' quantity={30} color='#a855f7' />
 
-      <NicknameModal isOpen={showNicknameModal} onSave={handleNicknameSave} onClose={() => setShowNicknameModal(false)} />
+      <NicknameModal
+        isOpen={showNicknameModal}
+        onSave={handleNicknameSave}
+        onClose={() => setShowNicknameModal(false)}
+        browserId={browserId}
+        locale={locale}
+      />
 
       <ShareSuggestionPopup show={showShareSuggestion} onDismiss={() => setShowShareSuggestion(false)} />
 

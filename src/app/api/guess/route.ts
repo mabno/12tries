@@ -38,11 +38,13 @@ const ERROR_MESSAGES = {
     profanity: 'Guess contains inappropriate language',
     invalidGuess: 'Invalid guess',
     invalidNickname: 'Invalid nickname',
+    nicknameTaken: 'This nickname is already taken. Please choose another one.',
   },
   es: {
     profanity: 'El intento contiene lenguaje inapropiado',
     invalidGuess: 'Intento inválido',
     invalidNickname: 'Apodo inválido',
+    nicknameTaken: 'Este apodo ya está en uso. Por favor elige otro.',
   },
 }
 
@@ -213,10 +215,36 @@ export async function POST(request: NextRequest) {
       // Find or create anonymous user
       let anonymousUser = await prisma.user.findUnique({ where: { browserId } })
       if (!anonymousUser) {
+        // Check if nickname is already taken by another user
+        const existingNickname = await prisma.user.findFirst({
+          where: {
+            nickname: nickname,
+            isAnonymous: true,
+            browserId: { not: browserId },
+          },
+        })
+
+        if (existingNickname) {
+          return NextResponse.json({ error: getErrorMessage('nicknameTaken', locale) }, { status: 400 })
+        }
+
         anonymousUser = await prisma.user.create({
           data: { browserId, nickname, isAnonymous: true },
         })
       } else if (anonymousUser.nickname !== nickname) {
+        // Check if new nickname is already taken by another user
+        const existingNickname = await prisma.user.findFirst({
+          where: {
+            nickname: nickname,
+            isAnonymous: true,
+            browserId: { not: browserId },
+          },
+        })
+
+        if (existingNickname) {
+          return NextResponse.json({ error: getErrorMessage('nicknameTaken', locale) }, { status: 400 })
+        }
+
         anonymousUser = await prisma.user.update({
           where: { id: anonymousUser.id },
           data: { nickname },

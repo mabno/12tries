@@ -72,7 +72,8 @@
         "empty": "El apodo no puede estar vacío",
         "tooShort": "El apodo debe tener al menos 2 caracteres",
         "tooLong": "El apodo debe tener menos de 20 caracteres",
-        "profanity": "El apodo contiene lenguaje inapropiado"
+        "profanity": "El apodo contiene lenguaje inapropiado",
+        "taken": "Este apodo ya está en uso. Por favor elige otro."
       }
     },
     "errors": {

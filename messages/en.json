@@ -72,7 +72,8 @@
         "empty": "Nickname cannot be empty",
         "tooShort": "Nickname must be at least 2 characters",
         "tooLong": "Nickname must be less than 20 characters",
-        "profanity": "Nickname contains inappropriate language"
+        "profanity": "Nickname contains inappropriate language",
+        "taken": "This nickname is already taken. Please choose another one."
       }
     },
     "errors": {

@@ -14,24 +14,59 @@ interface NicknameModalProps {
   isOpen: boolean
   onSave: (nickname: string) => void
   onClose?: () => void
+  browserId?: string | null
+  locale?: string
 }
 
-export default function NicknameModal({ isOpen, onSave, onClose }: NicknameModalProps) {
+export default function NicknameModal({ isOpen, onSave, onClose, browserId, locale = 'en' }: NicknameModalProps) {
   const t = useTranslations('game.nickname')
   const [nickname, setNickname] = useState('')
   const [error, setError] = useState('')
+  const [isValidating, setIsValidating] = useState(false)
 
   const handleSave = async () => {
+    setIsValidating(true)
+    setError('')
+
+    // First, validate locally
     const validation = await validateNickname(nickname)
 
     if (!validation.isValid) {
       setError(validation.error || 'Invalid nickname')
+      setIsValidating(false)
       return
     }
 
-    onSave(nickname.trim())
-    setNickname('')
-    setError('')
+    // Then, check with the backend if the nickname is unique
+    try {
+      const response = await fetch('/api/validate-nickname', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nickname: nickname.trim(),
+          browserId,
+          locale,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!data.valid) {
+        setError(data.error || t('errors.taken'))
+        setIsValidating(false)
+        return
+      }
+
+      // If validation passes, save the nickname
+      onSave(nickname.trim())
+      setNickname('')
+      setError('')
+    } catch (err) {
+      console.error('Error validating nickname:', err)
+      setError('Failed to validate nickname')
+    } finally {
+      setIsValidating(false)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -109,11 +144,21 @@ export default function NicknameModal({ isOpen, onSave, onClose }: NicknameModal
           </div>
           <Button
             onClick={handleSave}
-            className='w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all'
+            disabled={isValidating || !nickname.trim()}
+            className='w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed'
             size='lg'
           >
-            <Sparkles className='w-4 h-4 mr-2' />
-            {t('save')}
+            {isValidating ? (
+              <>
+                <span className='animate-spin mr-2'>⏳</span>
+                Validando...
+              </>
+            ) : (
+              <>
+                <Sparkles className='w-4 h-4 mr-2' />
+                {t('save')}
+              </>
+            )}
           </Button>
         </div>
       </DialogContent>
