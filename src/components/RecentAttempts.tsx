@@ -5,6 +5,7 @@ import { Marquee } from '@/components/ui/marquee'
 import { motion } from 'framer-motion'
 import { Avatar } from '@/components/ui/avatar'
 import { Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface AttemptData {
   id: string
@@ -16,14 +17,17 @@ interface AttemptData {
 }
 
 const AttemptCard = ({ attempt }: { attempt: AttemptData }) => {
+  const t = useTranslations('game.recentAttempts')
+
   const timeAgo = (date: Date) => {
     const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
-    if (seconds < 60) return 'ahora'
+    if (seconds < 60) return t('now')
     const minutes = Math.floor(seconds / 60)
-    if (minutes < 60) return `hace ${minutes}m`
+    if (minutes < 60) return t('minutesAgo', { minutes })
     const hours = Math.floor(minutes / 60)
-    if (hours < 24) return `hace ${hours}h`
-    return `hace ${Math.floor(hours / 24)}d`
+    if (hours < 24) return t('hoursAgo', { hours })
+    const days = Math.floor(hours / 24)
+    return t('daysAgo', { days })
   }
 
   return (
@@ -53,7 +57,7 @@ const AttemptCard = ({ attempt }: { attempt: AttemptData }) => {
             </span>
           </div>
           <p className='text-xs text-gray-600 dark:text-gray-300'>
-            intentó <span className='font-bold text-purple-600 dark:text-purple-400'>&quot;{attempt.guessText}&quot;</span>
+            {t('tried')} <span className='font-bold text-purple-600 dark:text-purple-400'>&quot;{attempt.guessText}&quot;</span>
           </p>
         </div>
       </div>
@@ -62,6 +66,7 @@ const AttemptCard = ({ attempt }: { attempt: AttemptData }) => {
 }
 
 export default function RecentAttempts() {
+  const t = useTranslations('game.recentAttempts')
   const [attempts, setAttempts] = useState<AttemptData[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -89,7 +94,7 @@ export default function RecentAttempts() {
     return (
       <div className='w-full pt-16'>
         <h3 className='text-xl font-bold text-center mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>
-          Últimos intentos de la comunidad
+          {t('loading')}
         </h3>
         <div className='flex items-center justify-center gap-2'>
           <div className='h-2 w-2 rounded-full bg-purple-500 animate-bounce [animation-delay:-0.3s]' />
@@ -111,7 +116,7 @@ export default function RecentAttempts() {
         animate={{ opacity: 1, y: 0 }}
         className='text-xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'
       >
-        🔥 Últimos intentos de la comunidad
+        {t('title')}
       </motion.h3>
       <div className='relative flex flex-col'>
         {/* Marquee normal */}

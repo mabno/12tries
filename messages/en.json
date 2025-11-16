@@ -47,6 +47,15 @@
     "category": {
       "label": "This word is related to"
     },
+    "recentAttempts": {
+      "title": "🔥 Recent Community Attempts",
+      "loading": "Recent community attempts",
+      "tried": "tried",
+      "now": "now",
+      "minutesAgo": "{minutes}m ago",
+      "hoursAgo": "{hours}h ago",
+      "daysAgo": "{days}d ago"
+    },
     "auth": {
       "playingAsGuest": "Playing as Guest",
       "guestMessage": "Your progress is saved locally. Sign in to save across devices and compete on the leaderboard!"

@@ -47,6 +47,15 @@
     "category": {
       "label": "Esta palabra está relacionada con"
     },
+    "recentAttempts": {
+      "title": "🔥 Últimos Intentos de la Comunidad",
+      "loading": "Últimos intentos de la comunidad",
+      "tried": "intentó",
+      "now": "ahora",
+      "minutesAgo": "hace {minutes}m",
+      "hoursAgo": "hace {hours}h",
+      "daysAgo": "hace {days}d"
+    },
     "auth": {
       "playingAsGuest": "Jugando como Invitado",
       "guestMessage": "Tu progreso se guarda localmente. ¡Inicia sesión para guardar en todos los dispositivos y competir en la tabla de clasificación!"
