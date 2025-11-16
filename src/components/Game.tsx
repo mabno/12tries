@@ -412,7 +412,7 @@ export default function Game({ locale }: GameProps) {
                       />
                       <div className='flex items-center gap-2 flex-wrap justify-center relative z-10'>
                         <motion.span
-                          className='text-sm font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider'
+                          className='text-sm text-center font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider'
                           animate={{
                             opacity: [0.8, 1, 0.8],
                           }}
