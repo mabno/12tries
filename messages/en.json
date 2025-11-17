@@ -95,6 +95,7 @@
     "guestMessage": "Your progress is saved locally. Sign in to save across devices and compete on the leaderboard!"
   },
   "leaderboard": {
+    "podium": "Podium",
     "title": "Leaderboard",
     "rank": "Rank",
     "player": "Player",

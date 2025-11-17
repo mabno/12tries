@@ -50,7 +50,9 @@ export default function HowToPlayPage({ params }: { params: { locale: string } }
               <CardHeader className='relative bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-sm'>
                 <CardTitle className='text-3xl font-bold flex items-center gap-3'>
                   <HelpCircle className='h-8 w-8 text-purple-500' />
-                  {t('title')}
+                  <span className='bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent'>
+                    {t('title')}
+                  </span>
                 </CardTitle>
               </CardHeader>
 

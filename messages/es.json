@@ -117,7 +117,8 @@
     "scoringExplanation": "La puntuación se basa en cuántos intentos usaste y qué tan cerca estuviste. Menos intentos y mayor cercanía = mejor puntuación. ¡Los jugadores que resuelven el desafío tienen prioridad!",
     "attemptsLabel": "Intentos",
     "bestMatchLabel": "Mejor Match",
-    "status": "Estado"
+    "status": "Estado",
+    "podium": "Podio"
   },
   "navigation": {
     "home": "Inicio",
