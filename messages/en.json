@@ -125,7 +125,7 @@
     "globalSubtitle": "Top 50 Players by Points",
     "totalScore": "Points",
     "globalExplanationTitle": "What is the Global Leaderboard?",
-    "globalExplanation": "This ranking shows the players with the highest cumulative score from all daily challenges. Your score from each day is added to your total!"
+    "globalExplanation": "This ranking shows the players who have accumulated the most points over time. Points are earned from your performance in each daily challenge: better proximity and fewer attempts = more points!"
   },
   "navigation": {
     "home": "Home",

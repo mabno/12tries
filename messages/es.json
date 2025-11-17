@@ -125,7 +125,7 @@
     "globalSubtitle": "Top 50 Jugadores por Puntos",
     "totalScore": "Puntos",
     "globalExplanationTitle": "¿Qué es el Ranking Global?",
-    "globalExplanation": "Esta clasificación muestra los jugadores con la mayor puntuación acumulada de todos los desafíos diarios. ¡Tu puntuación de cada día se suma a tu total!"
+    "globalExplanation": "Esta clasificación muestra los jugadores que han acumulado más puntos a lo largo del tiempo. Los puntos se obtienen por tu desempeño en cada desafío diario: mejor aproximación y menos intentos = más puntos!"
   },
   "navigation": {
     "home": "Inicio",
