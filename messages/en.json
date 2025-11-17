@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "12Tries",
-    "subtitle": "Guess today's word by how close your words are!",
+    "subtitle": "12 tries to guess today's word!",
     "pageTitle": "Daily Word Challenge"
   },
   "game": {
@@ -153,7 +153,9 @@
     }
   },
   "semanticExplanation": {
+    "slide1Intro": "The game is based on",
     "slide1Title": "Semantic Proximity",
+    "slide1Subtitle": "What is it?",
     "slide2Text": "Very Close!",
     "slide3Text": "Very Different!",
     "slide4Text": "Super Close!",

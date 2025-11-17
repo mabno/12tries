@@ -51,17 +51,20 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
   }, [daysAgo, params.locale])
 
   const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Crown className='h-6 w-6 text-yellow-500' />
-    if (rank === 2) return <Medal className='h-6 w-6 text-gray-400' />
-    if (rank === 3) return <Award className='h-6 w-6 text-amber-600' />
-    return <Star className='h-5 w-5 text-purple-500' />
+    if (rank === 1) return <Crown className='h-6 w-6 text-yellow-500 dark:text-yellow-400 drop-shadow-lg' />
+    if (rank === 2) return <Medal className='h-6 w-6 text-gray-400 dark:text-gray-300 drop-shadow-lg' />
+    if (rank === 3) return <Award className='h-6 w-6 text-amber-600 dark:text-amber-500 drop-shadow-lg' />
+    return <Star className='h-5 w-5 text-purple-400 dark:text-purple-500' />
   }
 
   const getRankColor = (rank: number) => {
-    if (rank === 1) return 'from-yellow-500/20 to-yellow-600/20 border-yellow-500'
-    if (rank === 2) return 'from-gray-400/20 to-gray-500/20 border-gray-400'
-    if (rank === 3) return 'from-amber-600/20 to-amber-700/20 border-amber-600'
-    return 'from-purple-500/10 to-pink-500/10 border-purple-300'
+    if (rank === 1)
+      return 'from-yellow-500/30 via-purple-500/30 to-pink-500/30 border-yellow-500 dark:border-yellow-400 shadow-xl shadow-yellow-500/20'
+    if (rank === 2)
+      return 'from-gray-300/25 via-purple-400/25 to-pink-400/25 border-gray-400 dark:border-gray-500 shadow-lg shadow-gray-400/15'
+    if (rank === 3)
+      return 'from-amber-500/25 via-purple-300/25 to-pink-300/25 border-amber-600 dark:border-amber-500 shadow-lg shadow-amber-600/15'
+    return 'from-purple-500/10 to-pink-500/10 border-purple-300 dark:border-purple-800'
   }
 
   const getDateLabel = () => {
@@ -89,7 +92,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                 <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'>
                   <div className='flex flex-col gap-1'>
                     <CardTitle className='text-2xl md:text-3xl font-bold flex items-center gap-3'>
-                      <Trophy className='h-6 w-6 md:h-8 md:w-8 text-yellow-500' />
+                      <Trophy className='h-6 w-6 md:h-8 md:w-8 text-purple-600 dark:text-purple-400' />
                       {t('title')}
                     </CardTitle>
                     <p className='text-sm text-gray-600 dark:text-gray-400 ml-10 md:ml-11'>{t('topPlayers')}</p>
@@ -108,15 +111,15 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                         size='sm'
                         onClick={() => setDaysAgo(Math.min(daysAgo + 1, 5))}
                         disabled={daysAgo >= 5}
-                        className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
+                        className='gap-1 md:gap-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border-gray-300 dark:border-gray-600 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow'
                       >
                         <ArrowLeft className='h-3 w-3 md:h-4 md:w-4' />
                         <span className='hidden sm:inline'>{t('previous')}</span>
                       </Button>
                     </motion.div>
                     <motion.div
-                      className='px-3 md:px-4 py-2 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-purple-900/40 rounded-xl font-bold min-w-[100px] md:min-w-[140px] text-center text-purple-900 dark:text-purple-100 shadow-lg border-2 border-purple-200 dark:border-purple-800 text-sm md:text-base'
-                      whileHover={{ scale: 1.05 }}
+                      className='px-4 md:px-5 py-2 md:py-2.5 bg-white dark:bg-gray-800 rounded-lg font-bold min-w-[120px] md:min-w-[160px] text-center text-gray-900 dark:text-gray-100 shadow-md border-2 border-gray-200 dark:border-gray-700 text-sm md:text-base'
+                      whileHover={{ scale: 1.02 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                     >
                       {getDateLabel()}
@@ -127,7 +130,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                         size='sm'
                         onClick={() => setDaysAgo(Math.max(daysAgo - 1, 0))}
                         disabled={daysAgo === 0}
-                        className='gap-1 md:gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border-purple-300 dark:border-purple-700 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md'
+                        className='gap-1 md:gap-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border-gray-300 dark:border-gray-600 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow'
                       >
                         <span className='hidden sm:inline'>{t('next')}</span>
                         <ArrowLeft className='h-3 w-3 md:h-4 md:w-4 rotate-180' />
@@ -141,13 +144,13 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className='p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
+                  className='p-4 bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg border border-purple-200 dark:border-purple-700'
                 >
                   <div className='flex items-start gap-2'>
-                    <Info className='h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5' />
+                    <Info className='h-5 w-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5' />
                     <div className='flex-1'>
-                      <h3 className='text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1'>{t('scoringTitle')}</h3>
-                      <p className='text-xs text-blue-700 dark:text-blue-300 leading-relaxed'>{t('scoringExplanation')}</p>
+                      <h3 className='text-sm font-semibold text-purple-900 dark:text-purple-100 mb-1'>{t('scoringTitle')}</h3>
+                      <p className='text-xs text-purple-700 dark:text-purple-300 leading-relaxed'>{t('scoringExplanation')}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -241,7 +244,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                       </span>
                     </div>
                     <div className='flex items-center justify-center gap-1'>
-                      <Target className='h-3 w-3 lg:h-3.5 lg:w-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0' />
+                      <Target className='h-3 w-3 lg:h-3.5 lg:w-3.5 text-purple-600 dark:text-purple-400 flex-shrink-0' />
                       <span className='text-[10px] lg:text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide lg:tracking-wider truncate'>
                         {t('attemptsLabel')}
                       </span>
@@ -258,7 +261,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                       </span>
                     </div>
                     <div className='flex items-center justify-center gap-1'>
-                      <Trophy className='h-3 w-3 lg:h-3.5 lg:w-3.5 text-yellow-600 dark:text-yellow-400 flex-shrink-0' />
+                      <Trophy className='h-3 w-3 lg:h-3.5 lg:w-3.5 text-purple-600 dark:text-purple-400 flex-shrink-0' />
                       <span className='text-[10px] lg:text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide lg:tracking-wider'>
                         {t('score')}
                       </span>
@@ -295,12 +298,30 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                             <div className='hidden md:grid grid-cols-[70px_1fr_100px_110px_100px_90px] lg:grid-cols-[80px_1fr_140px_140px_140px_100px] gap-2 lg:gap-4 items-center px-3 lg:px-4 py-2.5 lg:py-3'>
                               {/* Rank */}
                               <motion.div
-                                className='flex flex-col items-center justify-center'
+                                className='flex flex-col items-center justify-center relative'
                                 whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
                                 transition={{ duration: 0.3 }}
                               >
+                                {entry.rank <= 3 && (
+                                  <motion.div
+                                    className='absolute -inset-2 bg-gradient-to-r from-yellow-400/20 via-purple-400/20 to-pink-400/20 rounded-full blur-md'
+                                    animate={{
+                                      scale: [1, 1.2, 1],
+                                      opacity: [0.3, 0.6, 0.3],
+                                    }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                                  />
+                                )}
                                 <motion.span
-                                  className='text-2xl lg:text-3xl font-black text-gray-800 dark:text-gray-100'
+                                  className={`text-2xl lg:text-3xl font-black relative z-10 ${
+                                    entry.rank === 1
+                                      ? 'text-yellow-600 dark:text-yellow-400'
+                                      : entry.rank === 2
+                                      ? 'text-gray-600 dark:text-gray-300'
+                                      : entry.rank === 3
+                                      ? 'text-amber-600 dark:text-amber-500'
+                                      : 'text-gray-800 dark:text-gray-100'
+                                  }`}
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   transition={{ delay: index * 0.03 + 0.1, type: 'spring', stiffness: 500 }}
@@ -308,6 +329,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                   {entry.rank}
                                 </motion.span>
                                 <motion.div
+                                  className='relative z-10'
                                   initial={{ scale: 0, rotate: -180 }}
                                   animate={{ scale: 1, rotate: 0 }}
                                   transition={{ delay: index * 0.03 + 0.2, type: 'spring', stiffness: 300 }}
@@ -357,7 +379,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                 transition={{ type: 'spring', stiffness: 400 }}
                               >
                                 <motion.span
-                                  className='text-xl lg:text-2xl font-bold text-blue-700 dark:text-blue-300'
+                                  className='text-xl lg:text-2xl font-bold text-purple-700 dark:text-purple-300'
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   transition={{ delay: index * 0.03 + 0.25, type: 'spring', stiffness: 500 }}
@@ -394,8 +416,8 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                 <motion.div
                                   className={`flex items-center gap-1 lg:gap-1.5 px-2 py-1 lg:px-3 lg:py-1.5 rounded-full font-semibold text-xs lg:text-sm ${
                                     entry.solved
-                                      ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-700'
-                                      : 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700'
+                                      ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
+                                      : 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800'
                                   }`}
                                   whileHover={{ scale: 1.05 }}
                                   transition={{ type: 'spring', stiffness: 400 }}
@@ -442,13 +464,35 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                               {/* Top Row */}
                               <div className='flex items-center gap-3'>
                                 <motion.div
-                                  className='flex flex-col items-center'
+                                  className='flex flex-col items-center relative'
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   transition={{ delay: index * 0.03, type: 'spring' }}
                                 >
-                                  <span className='text-2xl font-black text-gray-800 dark:text-gray-100'>{entry.rank}</span>
-                                  {getRankIcon(entry.rank)}
+                                  {entry.rank <= 3 && (
+                                    <motion.div
+                                      className='absolute -inset-2 bg-gradient-to-r from-yellow-400/20 via-purple-400/20 to-pink-400/20 rounded-full blur-md'
+                                      animate={{
+                                        scale: [1, 1.2, 1],
+                                        opacity: [0.3, 0.6, 0.3],
+                                      }}
+                                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                                    />
+                                  )}
+                                  <span
+                                    className={`text-2xl font-black relative z-10 ${
+                                      entry.rank === 1
+                                        ? 'text-yellow-600 dark:text-yellow-400'
+                                        : entry.rank === 2
+                                        ? 'text-gray-600 dark:text-gray-300'
+                                        : entry.rank === 3
+                                        ? 'text-amber-600 dark:text-amber-500'
+                                        : 'text-gray-800 dark:text-gray-100'
+                                    }`}
+                                  >
+                                    {entry.rank}
+                                  </span>
+                                  <div className='relative z-10'>{getRankIcon(entry.rank)}</div>
                                 </motion.div>
 
                                 {entry.image ? (
@@ -474,7 +518,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                   </div>
                                   <div
                                     className={`text-xs font-semibold flex items-center gap-1 mt-0.5 ${
-                                      entry.solved ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'
+                                      entry.solved ? 'text-purple-600 dark:text-purple-400' : 'text-purple-500 dark:text-purple-500'
                                     }`}
                                   >
                                     {entry.solved ? (
@@ -495,14 +539,14 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                               {/* Stats Grid */}
                               <div className='grid grid-cols-3 gap-2'>
                                 <motion.div
-                                  className='flex flex-col items-center justify-center p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
+                                  className='flex flex-col items-center justify-center p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800'
                                   initial={{ opacity: 0, y: 10 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.03 + 0.2 }}
                                 >
-                                  <Target className='h-4 w-4 text-blue-600 dark:text-blue-400 mb-1' />
-                                  <span className='text-lg font-bold text-blue-900 dark:text-blue-100'>{entry.attempts}</span>
-                                  <span className='text-[9px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide mt-0.5'>
+                                  <Target className='h-4 w-4 text-purple-600 dark:text-purple-400 mb-1' />
+                                  <span className='text-lg font-bold text-purple-900 dark:text-purple-100'>{entry.attempts}</span>
+                                  <span className='text-[9px] font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wide mt-0.5'>
                                     {t('attemptsLabel')}
                                   </span>
                                 </motion.div>

@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "12Tries",
-    "subtitle": "¡Adivina la palabra de hoy según qué tan cerca estén tus palabras!",
+    "subtitle": "¡12 intentos para adivinar la palabra de hoy!",
     "pageTitle": "Desafío de Palabra Diario"
   },
   "game": {
@@ -153,7 +153,9 @@
     }
   },
   "semanticExplanation": {
+    "slide1Intro": "El juego se basa en la",
     "slide1Title": "Cercanía Semántica",
+    "slide1Subtitle": "¿Qué es?",
     "slide2Text": "¡Muy Cercanos!",
     "slide3Text": "¡Muy Diferentes!",
     "slide4Text": "¡Súper Cercanos!",

@@ -29,6 +29,14 @@ export default function SemanticExplanationDialog({ open, onOpenChange }: Semant
           >
             🧠
           </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className='text-base sm:text-lg md:text-xl text-center text-muted-foreground px-4'
+          >
+            {t('slide1Intro')}
+          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -37,6 +45,14 @@ export default function SemanticExplanationDialog({ open, onOpenChange }: Semant
           >
             {t('slide1Title')}
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className='text-lg sm:text-xl md:text-2xl text-center text-muted-foreground px-4'
+          >
+            {t('slide1Subtitle')}
+          </motion.p>
         </div>
       ),
     },

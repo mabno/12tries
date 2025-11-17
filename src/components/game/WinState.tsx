@@ -109,7 +109,7 @@ export default function WinState({ attemptsUsed, attemptsRemaining, targetWord, 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className='flex justify-center gap-4 flex-wrap'
+        className='flex justify-center gap-4 '
       >
         {/* Attempts Used */}
         <motion.div
