@@ -3,12 +3,14 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(request: NextRequest) {
   try {
-    // Get all users with their solved challenges count
-    const usersWithSolvedCount = await prisma.user.findMany({
+    // Get all users with their total score
+    const usersWithScore = await prisma.user.findMany({
       where: {
         dailyProgress: {
           some: {
-            solved: true,
+            attemptsCount: {
+              gt: 0,
+            },
           },
         },
       },
@@ -20,25 +22,21 @@ export async function GET(request: NextRequest) {
         isAnonymous: true,
         browserId: true,
         dailyProgress: {
-          where: {
-            solved: true,
-          },
           select: {
-            id: true,
-            solved: true,
+            score: true,
           },
         },
       },
     })
 
-    // Map to leaderboard entries with solved count
-    const leaderboardWithDuplicates = usersWithSolvedCount.map((user) => ({
+    // Map to leaderboard entries with total score
+    const leaderboardWithDuplicates = usersWithScore.map((user) => ({
       userId: user.id,
       name: user.isAnonymous ? user.nickname || 'Anonymous' : user.name || 'Anonymous',
       image: user.isAnonymous ? '' : user.image || '',
       isAnonymous: user.isAnonymous,
       browserId: user.browserId,
-      solvedCount: user.dailyProgress.length,
+      totalScore: user.dailyProgress.reduce((sum, progress) => sum + progress.score, 0),
     }))
 
     // Deduplicate users - keep only one entry per unique user
@@ -50,21 +48,21 @@ export async function GET(request: NextRequest) {
 
       const existingEntry = userMap.get(uniqueKey)
 
-      // Keep the entry with the highest solved count (or first encountered)
-      if (!existingEntry || entry.solvedCount > existingEntry.solvedCount) {
+      // Keep the entry with the highest total score (or first encountered)
+      if (!existingEntry || entry.totalScore > existingEntry.totalScore) {
         userMap.set(uniqueKey, entry)
       }
     })
 
-    // Convert map to array and sort by solved count (descending)
-    const uniqueLeaderboard = Array.from(userMap.values()).sort((a, b) => b.solvedCount - a.solvedCount)
+    // Convert map to array and sort by total score (descending)
+    const uniqueLeaderboard = Array.from(userMap.values()).sort((a, b) => b.totalScore - a.totalScore)
 
     // Add rank and limit to top 50
     const formattedLeaderboard = uniqueLeaderboard.slice(0, 50).map((entry, index) => ({
       rank: index + 1,
       name: entry.name,
       image: entry.image,
-      solvedCount: entry.solvedCount,
+      totalScore: entry.totalScore,
       isAnonymous: entry.isAnonymous,
     }))
 

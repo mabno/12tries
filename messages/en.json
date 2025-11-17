@@ -122,10 +122,10 @@
     "dailyTab": "Daily",
     "globalTab": "Global",
     "globalTitle": "Global Leaderboard",
-    "globalSubtitle": "Top 50 Players by Words Solved",
-    "wordsSolved": "Words Solved",
+    "globalSubtitle": "Top 50 Players by Points",
+    "totalScore": "Points",
     "globalExplanationTitle": "What is the Global Leaderboard?",
-    "globalExplanation": "This ranking shows the players who have solved the most words throughout all time. Each successfully solved daily challenge adds to your total count!"
+    "globalExplanation": "This ranking shows the players with the highest cumulative score from all daily challenges. Your score from each day is added to your total!"
   },
   "navigation": {
     "home": "Home",

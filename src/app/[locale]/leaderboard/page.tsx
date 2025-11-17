@@ -24,7 +24,7 @@ interface GlobalLeaderboardEntry {
   rank: number
   name: string
   image: string
-  solvedCount: number
+  totalScore: number
   isAnonymous?: boolean
 }
 
@@ -729,9 +729,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                     </div>
                     <div className='flex items-center justify-center gap-2'>
                       <Trophy className='h-4 w-4 text-purple-600 dark:text-purple-400' />
-                      <span className='text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider'>
-                        {t('wordsSolved')}
-                      </span>
+                      <span className='text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider'>{t('totalScore')}</span>
                     </div>
                   </motion.div>
 
@@ -884,7 +882,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                   transition={{ duration: 0.5 }}
                                 >
                                   <motion.div
-                                    className='px-6 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 text-white rounded-full font-black text-2xl shadow-lg relative overflow-hidden'
+                                    className='px-5 py-2.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 text-white rounded-full font-black text-lg shadow-lg relative overflow-hidden'
                                     initial={{ scale: 0, rotate: 180 }}
                                     animate={{ scale: 1, rotate: 0 }}
                                     transition={{ delay: index * 0.03 + 0.4, type: 'spring', stiffness: 300 }}
@@ -895,7 +893,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                       whileHover={{ x: '100%' }}
                                       transition={{ duration: 0.6 }}
                                     />
-                                    <span className='relative z-10'>{entry.solvedCount}</span>
+                                    <span className='relative z-10'>{entry.totalScore.toLocaleString()}</span>
                                   </motion.div>
                                 </motion.div>
                               </div>
@@ -966,9 +964,9 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                   transition={{ delay: index * 0.03 + 0.2 }}
                                 >
                                   <Trophy className='h-5 w-5 text-white mr-2' />
-                                  <span className='text-2xl font-bold text-white'>{entry.solvedCount}</span>
+                                  <span className='text-xl font-bold text-white'>{entry.totalScore.toLocaleString()}</span>
                                   <span className='text-xs font-semibold text-white/90 uppercase tracking-wide ml-2'>
-                                    {t('wordsSolved')}
+                                    {t('totalScore')}
                                   </span>
                                 </motion.div>
                               </div>

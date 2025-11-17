@@ -122,10 +122,10 @@
     "dailyTab": "Diario",
     "globalTab": "Global",
     "globalTitle": "Ranking Global",
-    "globalSubtitle": "Top 50 Jugadores por Palabras Resueltas",
-    "wordsSolved": "Palabras Resueltas",
+    "globalSubtitle": "Top 50 Jugadores por Puntos",
+    "totalScore": "Puntos",
     "globalExplanationTitle": "¿Qué es el Ranking Global?",
-    "globalExplanation": "Esta clasificación muestra los jugadores que han resuelto más palabras a lo largo de todo el tiempo. ¡Cada desafío diario resuelto suma a tu conteo total!"
+    "globalExplanation": "Esta clasificación muestra los jugadores con la mayor puntuación acumulada de todos los desafíos diarios. ¡Tu puntuación de cada día se suma a tu total!"
   },
   "navigation": {
     "home": "Inicio",
