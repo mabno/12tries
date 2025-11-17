@@ -125,7 +125,11 @@ function validateAttemptPermission(progress: any) {
   if (progress.solved) {
     return { canAttempt: false, error: 'Challenge already solved' }
   }
-  if (progress.attemptsCount >= MAX_ATTEMPTS) {
+
+  // Allow 13 attempts if Rocky bonus was used, otherwise 12
+  const maxAllowedAttempts = progress.rockyBonusUsed ? MAX_ATTEMPTS + 1 : MAX_ATTEMPTS
+
+  if (progress.attemptsCount >= maxAllowedAttempts) {
     return { canAttempt: false, error: 'No attempts remaining' }
   }
   return { canAttempt: true }

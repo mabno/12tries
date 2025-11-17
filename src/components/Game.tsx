@@ -27,6 +27,8 @@ import FailState from '@/components/game/FailState'
 import LoadingState from '@/components/game/LoadingState'
 import ShareSuggestionPopup from '@/components/ShareSuggestionPopup'
 import SemanticExplanationDialog from '@/components/SemanticExplanationDialog'
+import RockyPopup from '@/components/game/RockyPopup'
+import RockyCorner from '@/components/game/RockyCorner'
 
 interface Attempt {
   guess: string
@@ -62,6 +64,10 @@ export default function Game({ locale }: GameProps) {
   const [challengeLoading, setChallengeLoading] = useState(true)
   const [showShareSuggestion, setShowShareSuggestion] = useState(false)
   const [showSemanticExplanation, setShowSemanticExplanation] = useState(false)
+  const [showRockyPopup, setShowRockyPopup] = useState(false)
+  const [rockyOfferUsed, setRockyOfferUsed] = useState(false)
+  const [shouldShowRocky, setShouldShowRocky] = useState(false)
+  const [showRockyCorner, setShowRockyCorner] = useState(false)
 
   // Check session status and update anonymous state
   useEffect(() => {
@@ -117,6 +123,18 @@ export default function Game({ locale }: GameProps) {
         setAttemptsRemaining(data.attemptsRemaining ?? 12)
         setSolved(data.solved ?? false)
         setCategory(data.category ?? null)
+
+        // Get shouldShowRocky from backend
+        setShouldShowRocky(data.shouldShowRocky ?? false)
+
+        // Get rockyBonusUsed from backend (tracks if Rocky bonus was used)
+        setRockyOfferUsed(data.rockyBonusUsed ?? false)
+
+        console.log('[ROCKY DEBUG] Initial state:', {
+          shouldShowRocky: data.shouldShowRocky,
+          rockyBonusUsed: data.rockyBonusUsed,
+          browserId,
+        })
       } catch (error) {
         console.error('Error loading progress from backend:', error)
       } finally {
@@ -252,14 +270,36 @@ export default function Game({ locale }: GameProps) {
         }
       }
 
-      // Show share suggestion on loss (no more attempts)
+      // Show Rocky popup or share suggestion on loss (no more attempts)
       if (!newSolved && newRemaining === 0) {
-        const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
-        if (!hasShownShareSuggestion) {
+        // Check if Rocky should appear based on backend logic
+        // shouldShowRocky is true when:
+        // - 2nd game (after completing 1 challenge): 100% chance
+        // - 3rd+ game (after completing 2+ challenges): 25% chance
+        console.log('[ROCKY DEBUG] Checking Rocky conditions:', {
+          shouldShowRocky,
+          rockyOfferUsed,
+          newRemaining,
+          newSolved,
+        })
+        if (shouldShowRocky && !rockyOfferUsed) {
+          console.log('[ROCKY DEBUG] Showing Rocky popup!')
           setTimeout(() => {
-            setShowShareSuggestion(true)
-            localStorage.setItem('hasShownShareSuggestion', 'true')
-          }, 1500) // Show after 1.5 seconds
+            setShowRockyPopup(true)
+          }, 4500) // Show Rocky after popup closes
+        } else {
+          console.log('[ROCKY DEBUG] Not showing Rocky. Reason:', {
+            noShouldShow: !shouldShowRocky,
+            alreadyUsed: rockyOfferUsed,
+          })
+          // Show share suggestion if Rocky doesn't appear
+          const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
+          if (!hasShownShareSuggestion) {
+            setTimeout(() => {
+              setShowShareSuggestion(true)
+              localStorage.setItem('hasShownShareSuggestion', 'true')
+            }, 1500) // Show after 1.5 seconds
+          }
         }
       }
 
@@ -317,6 +357,52 @@ export default function Game({ locale }: GameProps) {
     }
   }
 
+  const handleRockyAccept = async () => {
+    try {
+      // Call backend to activate Rocky bonus
+      const response = await fetch('/api/rocky-bonus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ browserId }),
+      })
+
+      if (!response.ok) {
+        console.error('Failed to activate Rocky bonus')
+        return
+      }
+
+      // Grant one extra attempt
+      setAttemptsRemaining(1)
+      setShowRockyPopup(false)
+
+      // Mark Rocky offer as used (tracked in backend via rockyBonusUsed)
+      setRockyOfferUsed(true)
+
+      // Show Rocky in the corner to cheer the user on
+      setShowRockyCorner(true)
+
+      console.log('[ROCKY] Bonus activated successfully!')
+    } catch (error) {
+      console.error('Error activating Rocky bonus:', error)
+    }
+  }
+
+  const handleRockyDecline = () => {
+    setShowRockyPopup(false)
+
+    // Mark Rocky offer as declined (user saw it but declined)
+    setRockyOfferUsed(true)
+
+    // Show share suggestion after declining Rocky
+    const hasShownShareSuggestion = localStorage.getItem('hasShownShareSuggestion')
+    if (!hasShownShareSuggestion) {
+      setTimeout(() => {
+        setShowShareSuggestion(true)
+        localStorage.setItem('hasShownShareSuggestion', 'true')
+      }, 500)
+    }
+  }
+
   const attemptsUsed = 12 - attemptsRemaining
   const hintAvailable = attemptsUsed >= 9 && !solved
   const remainingForHint = Math.max(0, 9 - attemptsUsed)
@@ -345,6 +431,10 @@ export default function Game({ locale }: GameProps) {
       <ShareSuggestionPopup show={showShareSuggestion} onDismiss={() => setShowShareSuggestion(false)} />
 
       <SemanticExplanationDialog open={showSemanticExplanation} onOpenChange={setShowSemanticExplanation} />
+
+      <RockyPopup isVisible={showRockyPopup} onAccept={handleRockyAccept} onDecline={handleRockyDecline} />
+
+      <RockyCorner isVisible={showRockyCorner} />
 
       {/* Loading state */}
       {challengeLoading ? (
@@ -415,7 +505,7 @@ export default function Game({ locale }: GameProps) {
               )}
 
               {/* Fail state */}
-              {!solved && attemptsRemaining === 0 && <FailState locale={locale} />}
+              {!solved && attemptsRemaining <= 0 && <FailState locale={locale} />}
             </CardContent>
           </Card>
         </motion.div>

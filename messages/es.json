@@ -169,5 +169,13 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "gotIt": "¡Entendido!"
+  },
+  "rocky": {
+    "title": "¡Hey! ¡No Te Rindas!",
+    "message": "Soy Rocky, tu mascota de la suerte! Te puedo dar UN intento más. ¿Qué dices?",
+    "accept": "¡Sí!",
+    "decline": "No Gracias",
+    "believes": "¡Rocky confía en ti!",
+    "cornerMessage": "Dame huesitos!"
   }
 }

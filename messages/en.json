@@ -169,5 +169,13 @@
     "previous": "Previous",
     "next": "Next",
     "gotIt": "Got it!"
+  },
+  "rocky": {
+    "title": "Hey! Don't Give Up!",
+    "message": "I'm Rocky, your lucky mascot! I can give you ONE more attempt. What do you say?",
+    "accept": "Yes!",
+    "decline": "No Thanks",
+    "believes": "Rocky believes in you!",
+    "cornerMessage": "Give me huesitos!"
   }
 }

@@ -36,7 +36,7 @@ async function main() {
   console.log('📝 Creating words with embeddings...')
 
   // Load words from CSV
-  const WORDS = readWordsFromCSV()
+  const WORDS = readWordsFromCSV().slice(0, 4)
   console.log(`📊 Loaded ${WORDS.length} words from CSV`)
 
   for (const wordData of WORDS) {

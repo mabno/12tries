@@ -3,12 +3,57 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { getTodayUTC } from '@/lib/utils'
 import OpenAI from 'openai'
+import type { DailyChallenge, Word, DailyProgress, Attempt, User } from '@prisma/client'
+
+// ===========================
+// CONSTANTS
+// ===========================
+
+const MAX_ATTEMPTS = 12
+const RECENT_CHALLENGES_LIMIT = 20
+const DEFAULT_LOCALE = 'en'
+const DEFAULT_CATEGORY = 'general'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-async function generateCategory(wordEn: string, wordEs: string): Promise<{ categoryEn: string; categoryEs: string }> {
+// ===========================
+// TYPES
+// ===========================
+
+type ChallengeWithWord = DailyChallenge & { word: Word }
+
+interface CategoryGeneration {
+  categoryEn: string
+  categoryEs: string
+}
+
+interface AttemptResponse {
+  guess: string
+  similarity: number
+  attemptedAt: string
+}
+
+interface ChallengeResponse {
+  challengeId: string
+  wordLength: number
+  category: string
+  attemptsUsed: number
+  attemptsRemaining: number
+  solved: boolean
+  attempts: AttemptResponse[]
+  bestSimilarity: number
+  anonymous: boolean
+  shouldShowRocky: boolean
+  rockyBonusUsed: boolean
+}
+
+// ===========================
+// AI CATEGORY GENERATION
+// ===========================
+
+async function generateCategory(wordEn: string, wordEs: string): Promise<CategoryGeneration> {
   try {
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -46,202 +91,282 @@ Respond in JSON format:
 
     const response = completion.choices[0]?.message?.content?.trim()
     if (!response) {
-      return { categoryEn: 'general', categoryEs: 'general' }
+      return { categoryEn: DEFAULT_CATEGORY, categoryEs: DEFAULT_CATEGORY }
     }
 
     const parsed = JSON.parse(response)
     return {
-      categoryEn: parsed.categoryEn || 'general',
-      categoryEs: parsed.categoryEs || 'general',
+      categoryEn: parsed.categoryEn || DEFAULT_CATEGORY,
+      categoryEs: parsed.categoryEs || DEFAULT_CATEGORY,
     }
   } catch (error) {
     console.error('Error generating category:', error)
-    return { categoryEn: 'general', categoryEs: 'general' }
+    return { categoryEn: DEFAULT_CATEGORY, categoryEs: DEFAULT_CATEGORY }
   }
 }
+
+// ===========================
+// CHALLENGE MANAGEMENT
+// ===========================
+
+async function getRecentlyUsedWordIds(): Promise<string[]> {
+  const recentChallenges = await prisma.dailyChallenge.findMany({
+    take: RECENT_CHALLENGES_LIMIT,
+    orderBy: { date: 'desc' },
+    select: { wordId: true },
+  })
+
+  return recentChallenges.map((c) => c.wordId)
+}
+
+async function selectRandomWord(): Promise<Word> {
+  const recentWordIds = await getRecentlyUsedWordIds()
+
+  let words = await prisma.word.findMany({
+    where: { id: { notIn: recentWordIds } },
+  })
+
+  if (words.length === 0) {
+    words = await prisma.word.findMany()
+  }
+
+  return words[Math.floor(Math.random() * words.length)]
+}
+
+async function createNewChallenge(today: Date): Promise<ChallengeWithWord> {
+  const randomWord = await selectRandomWord()
+
+  console.log(`[CHALLENGE] Generating category for word: ${randomWord.textEn} / ${randomWord.textEs}`)
+  const { categoryEn, categoryEs } = await generateCategory(randomWord.textEn, randomWord.textEs)
+  console.log(`[CHALLENGE] Generated categories: ${categoryEn} / ${categoryEs}`)
+
+  return await prisma.dailyChallenge.create({
+    data: {
+      wordId: randomWord.id,
+      date: today,
+      categoryEn,
+      categoryEs,
+    },
+    include: { word: true },
+  })
+}
+
+async function getTodayChallenge(today: Date): Promise<ChallengeWithWord> {
+  const existingChallenge = await prisma.dailyChallenge.findFirst({
+    where: { date: today },
+    include: { word: true },
+  })
+
+  return existingChallenge || (await createNewChallenge(today))
+}
+
+// ===========================
+// USER PROGRESS & ATTEMPTS
+// ===========================
+
+async function getUserAttempts(userId: string, wordId: string, today: Date): Promise<Attempt[]> {
+  return await prisma.attempt.findMany({
+    where: {
+      userId,
+      wordId,
+      attemptedAt: { gte: today },
+    },
+    orderBy: { attemptedAt: 'desc' },
+  })
+}
+
+async function getOrCreateProgress(userId: string, challengeId: string): Promise<DailyProgress> {
+  const existingProgress = await prisma.dailyProgress.findUnique({
+    where: {
+      userId_challengeId: {
+        userId,
+        challengeId,
+      },
+    },
+  })
+
+  if (existingProgress) {
+    return existingProgress
+  }
+
+  return await prisma.dailyProgress.create({
+    data: {
+      userId,
+      challengeId,
+    },
+  })
+}
+
+async function countPreviousCompletedChallenges(userId: string, currentChallengeId: string): Promise<number> {
+  return await prisma.dailyProgress.count({
+    where: {
+      userId,
+      challengeId: { not: currentChallengeId },
+      OR: [{ solved: true }, { attemptsCount: { gte: MAX_ATTEMPTS } }],
+    },
+  })
+}
+
+function shouldShowRockyPopup(completedChallengesCount: number, timesOfRockyBonusUsed: number): boolean {
+  // Primera vez: no mostrar Rocky
+  if (completedChallengesCount === 0) {
+    return false
+  }
+
+  // No es la primera vez, pero nunca ha usado el bono de Rocky: SIEMPRE mostrar Rocky
+  if (timesOfRockyBonusUsed === 0) {
+    return true
+  }
+
+  // Tercera vez en adelante: 25% de probabilidad (puede aparecer múltiples veces)
+  return Math.random() < 0.25
+}
+
+// ===========================
+// RESPONSE BUILDERS
+// ===========================
+
+function getLocalizedWordLength(word: Word, locale: string): number {
+  return locale === 'es' ? word.textEs.length : word.textEn.length
+}
+
+function getLocalizedCategory(challenge: ChallengeWithWord, locale: string): string {
+  return locale === 'es' ? challenge.categoryEs || DEFAULT_CATEGORY : challenge.categoryEn || DEFAULT_CATEGORY
+}
+
+function formatAttempts(attempts: Attempt[]): AttemptResponse[] {
+  return attempts.map((a) => ({
+    guess: a.guessText,
+    similarity: a.similarity,
+    attemptedAt: a.attemptedAt.toISOString(),
+  }))
+}
+
+function buildChallengeResponse(
+  challenge: ChallengeWithWord,
+  progress: DailyProgress | null,
+  attempts: Attempt[],
+  locale: string,
+  isAnonymous: boolean,
+  shouldShowRocky: boolean
+): ChallengeResponse {
+  const rockyBonusUsed = progress?.rockyBonusUsed || false
+  const maxAttempts = rockyBonusUsed ? MAX_ATTEMPTS + 1 : MAX_ATTEMPTS
+
+  return {
+    challengeId: challenge.id,
+    wordLength: getLocalizedWordLength(challenge.word, locale),
+    category: getLocalizedCategory(challenge, locale),
+    attemptsUsed: progress?.attemptsCount || 0,
+    attemptsRemaining: maxAttempts - (progress?.attemptsCount || 0),
+    solved: progress?.solved || false,
+    attempts: formatAttempts(attempts),
+    bestSimilarity: progress?.bestSimilarity || 0,
+    anonymous: isAnonymous,
+    shouldShowRocky,
+    rockyBonusUsed,
+  }
+}
+
+// ===========================
+// ANONYMOUS USER HANDLERS
+// ===========================
+
+async function handleAnonymousUser(
+  challenge: ChallengeWithWord,
+  browserId: string | null,
+  locale: string,
+  today: Date
+): Promise<ChallengeResponse> {
+  if (!browserId) {
+    return buildChallengeResponse(challenge, null, [], locale, true, false)
+  }
+
+  const anonymousUser = await prisma.user.findUnique({
+    where: { browserId },
+  })
+
+  if (!anonymousUser) {
+    return buildChallengeResponse(challenge, null, [], locale, true, false)
+  }
+
+  const progress = await prisma.dailyProgress.findUnique({
+    where: {
+      userId_challengeId: {
+        userId: anonymousUser.id,
+        challengeId: challenge.id,
+      },
+    },
+  })
+
+  if (!progress) {
+    return buildChallengeResponse(challenge, null, [], locale, true, false)
+  }
+
+  const attempts = await getUserAttempts(anonymousUser.id, challenge.wordId, today)
+  const previousCompleted = await prisma.dailyProgress.count({
+    where: {
+      userId: anonymousUser.id,
+      challengeId: { not: challenge.id },
+    },
+  })
+  const timesOfRockyBonusUsed = await prisma.dailyProgress.count({
+    where: {
+      userId: anonymousUser.id,
+      rockyBonusUsed: true,
+    },
+  })
+
+  const shouldShowRocky = shouldShowRockyPopup(previousCompleted, timesOfRockyBonusUsed)
+
+  return buildChallengeResponse(challenge, progress, attempts, locale, true, shouldShowRocky)
+}
+
+// ===========================
+// AUTHENTICATED USER HANDLERS
+// ===========================
+
+async function handleAuthenticatedUser(
+  challenge: ChallengeWithWord,
+  userId: string,
+  locale: string,
+  today: Date
+): Promise<ChallengeResponse> {
+  const progress = await getOrCreateProgress(userId, challenge.id)
+  const attempts = await getUserAttempts(userId, challenge.wordId, today)
+  const previousCompleted = await countPreviousCompletedChallenges(userId, challenge.id)
+  const timesOfRockyBonusUsed = await prisma.dailyProgress.count({
+    where: {
+      userId: userId,
+      rockyBonusUsed: true,
+    },
+  })
+  const shouldShowRocky = shouldShowRockyPopup(previousCompleted, timesOfRockyBonusUsed)
+
+  return buildChallengeResponse(challenge, progress, attempts, locale, false, shouldShowRocky)
+}
+
+// ===========================
+// MAIN ROUTE HANDLER
+// ===========================
 
 export async function GET(request: NextRequest) {
   try {
     const session = await auth()
     const searchParams = request.nextUrl.searchParams
-    const locale = searchParams.get('locale') || 'en'
-
-    // Get today's challenge (UTC)
+    const locale = searchParams.get('locale') || DEFAULT_LOCALE
     const today = getTodayUTC()
 
-    let challenge = await prisma.dailyChallenge.findFirst({
-      where: {
-        date: today,
-      },
-      include: {
-        word: true,
-      },
-    })
+    const challenge = await getTodayChallenge(today)
 
-    // Create new challenge if none exists for today
-    if (!challenge) {
-      // Get the last 20 challenges to avoid repeating words
-      const recentChallenges = await prisma.dailyChallenge.findMany({
-        take: 20,
-        orderBy: { date: 'desc' },
-        select: { wordId: true },
-      })
-
-      const recentWordIds = recentChallenges.map((c) => c.wordId)
-
-      // Get words that haven't been used recently
-      let words = await prisma.word.findMany({
-        where: {
-          id: {
-            notIn: recentWordIds,
-          },
-        },
-      })
-
-      // If all words have been used recently, select from all words
-      if (words.length === 0) {
-        words = await prisma.word.findMany()
-      }
-
-      const randomWord = words[Math.floor(Math.random() * words.length)]
-
-      // Generate category for the word
-      console.log(`[CHALLENGE] Generating category for word: ${randomWord.textEn} / ${randomWord.textEs}`)
-      const { categoryEn, categoryEs } = await generateCategory(randomWord.textEn, randomWord.textEs)
-      console.log(`[CHALLENGE] Generated categories: ${categoryEn} / ${categoryEs}`)
-
-      challenge = await prisma.dailyChallenge.create({
-        data: {
-          wordId: randomWord.id,
-          date: today,
-          categoryEn,
-          categoryEs,
-        },
-        include: {
-          word: true,
-        },
-      })
-    }
-
-    // For anonymous users, check if they have a browserId to load progress
     if (!session?.user) {
       const browserId = searchParams.get('browserId')
-
-      if (browserId) {
-        // Try to find anonymous user by browserId
-        const anonymousUser = await prisma.user.findUnique({
-          where: {
-            browserId: browserId,
-          },
-        })
-
-        if (anonymousUser) {
-          // Get progress for anonymous user
-          const progress = await prisma.dailyProgress.findUnique({
-            where: {
-              userId_challengeId: {
-                userId: anonymousUser.id,
-                challengeId: challenge.id,
-              },
-            },
-          })
-
-          if (progress) {
-            // Get user's attempts for this challenge
-            const attempts = await prisma.attempt.findMany({
-              where: {
-                userId: anonymousUser.id,
-                wordId: challenge.wordId,
-                attemptedAt: {
-                  gte: today,
-                },
-              },
-              orderBy: {
-                attemptedAt: 'desc',
-              },
-            })
-
-            return NextResponse.json({
-              challengeId: challenge.id,
-              wordLength: locale === 'es' ? challenge.word.textEs.length : challenge.word.textEn.length,
-              category: locale === 'es' ? challenge.categoryEs : challenge.categoryEn,
-              attemptsUsed: progress.attemptsCount,
-              attemptsRemaining: 12 - progress.attemptsCount,
-              solved: progress.solved,
-              attempts: attempts.map((a) => ({
-                guess: a.guessText,
-                similarity: a.similarity,
-                attemptedAt: a.attemptedAt.toISOString(),
-              })),
-              bestSimilarity: progress.bestSimilarity,
-              anonymous: true,
-            })
-          }
-        }
-      }
-
-      // No browserId or no progress found, return default
-      return NextResponse.json({
-        challengeId: challenge.id,
-        wordLength: locale === 'es' ? challenge.word.textEs.length : challenge.word.textEn.length,
-        category: locale === 'es' ? challenge.categoryEs : challenge.categoryEn,
-        attemptsUsed: 0,
-        attemptsRemaining: 12,
-        solved: false,
-        attempts: [],
-        bestSimilarity: 0,
-        anonymous: true,
-      })
+      const response = await handleAnonymousUser(challenge, browserId, locale, today)
+      return NextResponse.json(response)
     }
 
-    // For authenticated users, get their progress
-    let progress = await prisma.dailyProgress.findUnique({
-      where: {
-        userId_challengeId: {
-          userId: session.user.id,
-          challengeId: challenge.id,
-        },
-      },
-    })
-
-    if (!progress) {
-      progress = await prisma.dailyProgress.create({
-        data: {
-          userId: session.user.id,
-          challengeId: challenge.id,
-        },
-      })
-    }
-
-    // Get user's attempts for this challenge (UTC)
-    const attempts = await prisma.attempt.findMany({
-      where: {
-        userId: session.user.id,
-        wordId: challenge.wordId,
-        attemptedAt: {
-          gte: today,
-        },
-      },
-      orderBy: {
-        attemptedAt: 'desc',
-      },
-    })
-
-    return NextResponse.json({
-      challengeId: challenge.id,
-      wordLength: locale === 'es' ? challenge.word.textEs.length : challenge.word.textEn.length,
-      category: locale === 'es' ? challenge.categoryEs : challenge.categoryEn,
-      attemptsUsed: progress.attemptsCount,
-      attemptsRemaining: 12 - progress.attemptsCount,
-      solved: progress.solved,
-      attempts: attempts.map((a) => ({
-        guess: a.guessText,
-        similarity: a.similarity,
-        attemptedAt: a.attemptedAt.toISOString(),
-      })),
-      bestSimilarity: progress.bestSimilarity,
-      anonymous: false,
-    })
+    const response = await handleAuthenticatedUser(challenge, session.user.id, locale, today)
+    return NextResponse.json(response)
   } catch (error) {
     console.error('Error fetching daily challenge:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

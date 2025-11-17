@@ -107,6 +107,7 @@ model DailyProgress {
   lastAttemptAt   DateTime @default(now())
   bestSimilarity  Float    @default(0)
   score           Int      @default(0) // Calculated score based on similarity and attempts
+  rockyBonusUsed  Boolean  @default(false) // Track if Rocky's extra attempt was used
 
   user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   challenge DailyChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
