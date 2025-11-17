@@ -105,41 +105,41 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
       {/* Main content */}
       <main className='container mx-auto px-4 py-8 relative z-10'>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          {/* Mode Tabs - Outside Card */}
+          <div className='flex justify-center gap-2 mb-6'>
+            <motion.button
+              onClick={() => setMode('daily')}
+              className={`px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 flex items-center gap-2 ${
+                mode === 'daily'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Trophy className='h-4 w-4' />
+              {t('dailyTab')}
+            </motion.button>
+            <motion.button
+              onClick={() => setMode('global')}
+              className={`px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 flex items-center gap-2 ${
+                mode === 'global'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Globe className='h-4 w-4' />
+              {t('globalTab')}
+            </motion.button>
+          </div>
+
           <Card className='relative overflow-hidden border-2 border-purple-200/50 shadow-2xl'>
             <div className='absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-purple-500/5' />
 
             <CardHeader className='relative bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-sm'>
               <div className='flex flex-col gap-4'>
-                {/* Mode Tabs */}
-                <div className='flex justify-center gap-2'>
-                  <motion.button
-                    onClick={() => setMode('daily')}
-                    className={`px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 flex items-center gap-2 ${
-                      mode === 'daily'
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Trophy className='h-4 w-4' />
-                    {t('dailyTab')}
-                  </motion.button>
-                  <motion.button
-                    onClick={() => setMode('global')}
-                    className={`px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 flex items-center gap-2 ${
-                      mode === 'global'
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Globe className='h-4 w-4' />
-                    {t('globalTab')}
-                  </motion.button>
-                </div>
-
                 {/* Header Title */}
                 <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'>
                   <div className='flex flex-col gap-1'>
