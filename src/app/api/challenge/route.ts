@@ -16,7 +16,7 @@ async function generateCategory(wordEn: string, wordEs: string): Promise<{ categ
         {
           role: 'system',
           content:
-            'You are an expert at categorizing words. Given a word, provide ONE or maximum TWO words that indicate the category/group/classification to narrow down the universe of possibilities. This is NOT a hint, just a category.',
+            'You are an expert at categorizing words. Given a word, provide ONE or maximum TWO words that indicate the category/group/classification to narrow down the universe of possibilities. This is NOT a hint, just a category. IMPORTANT: The category MUST be different from the target word itself.',
         },
         {
           role: 'user',
@@ -25,15 +25,17 @@ Word in Spanish: "${wordEs}"
 
 Provide the category in BOTH languages. The category should be a general classification (1-2 words maximum) that helps narrow possibilities without being a direct hint.
 
+CRITICAL RULE: The category MUST NOT be the same as the target word. If the word is "doctor", the category cannot be "doctor". It should be "profession" or "health" instead.
+
 Examples:
-- If the word is "vacation", the category could be "travel" or "leisure"
-- If the word is "doctor", the category could be "profession" or "health"
-- If the word is "pizza", the category could be "food"
+- If the word is "vacation", the category could be "travel" or "leisure" (NOT "vacation")
+- If the word is "doctor", the category could be "profession" or "health" (NOT "doctor")
+- If the word is "pizza", the category could be "food" or "cuisine" (NOT "pizza")
 
 Respond in JSON format:
 {
-  "categoryEn": "category in English (1-2 words)",
-  "categoryEs": "categoría en español (1-2 palabras)"
+  "categoryEn": "category in English (1-2 words, DIFFERENT from '${wordEn}')",
+  "categoryEs": "categoría en español (1-2 palabras, DIFERENTE de '${wordEs}')"
 }`,
         },
       ],
