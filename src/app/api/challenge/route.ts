@@ -208,7 +208,7 @@ async function countPreviousCompletedChallenges(userId: string, currentChallenge
 
 function shouldShowRockyPopup(completedChallengesCount: number, timesOfRockyBonusUsed: number): boolean {
   // Primera vez: no mostrar Rocky
-  if (completedChallengesCount === 1) {
+  if (completedChallengesCount <= 1) {
     return false
   }
 
@@ -289,20 +289,6 @@ async function handleAnonymousUser(
     return buildChallengeResponse(challenge, null, [], locale, true, false)
   }
 
-  const progress = await prisma.dailyProgress.findUnique({
-    where: {
-      userId_challengeId: {
-        userId: anonymousUser.id,
-        challengeId: challenge.id,
-      },
-    },
-  })
-
-  if (!progress) {
-    return buildChallengeResponse(challenge, null, [], locale, true, false)
-  }
-
-  const attempts = await getUserAttempts(anonymousUser.id, challenge.wordId, today)
   const previousCompleted = await prisma.dailyProgress.count({
     where: {
       userId: anonymousUser.id,
@@ -317,6 +303,21 @@ async function handleAnonymousUser(
   })
 
   const shouldShowRocky = shouldShowRockyPopup(previousCompleted, timesOfRockyBonusUsed)
+
+  const progress = await prisma.dailyProgress.findUnique({
+    where: {
+      userId_challengeId: {
+        userId: anonymousUser.id,
+        challengeId: challenge.id,
+      },
+    },
+  })
+
+  if (!progress) {
+    return buildChallengeResponse(challenge, null, [], locale, true, shouldShowRocky)
+  }
+
+  const attempts = await getUserAttempts(anonymousUser.id, challenge.wordId, today)
 
   return buildChallengeResponse(challenge, progress, attempts, locale, true, shouldShowRocky)
 }
