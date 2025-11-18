@@ -202,7 +202,6 @@ async function countPreviousCompletedChallenges(userId: string, currentChallenge
     where: {
       userId,
       challengeId: { not: currentChallengeId },
-      OR: [{ solved: true }, { attemptsCount: { gte: MAX_ATTEMPTS } }],
     },
   })
 }
