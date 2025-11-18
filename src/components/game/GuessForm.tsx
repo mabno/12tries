@@ -35,6 +35,7 @@ export default function GuessForm({ guess, loading, shake, onGuessChange, onSubm
             className='h-14 text-lg font-medium border-2 transition-all focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20'
             disabled={loading}
             autoFocus
+            maxLength={30}
           />
         </motion.div>
 

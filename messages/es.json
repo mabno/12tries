@@ -82,7 +82,6 @@
     },
     "errors": {
       "profanity": "El intento contiene lenguaje inapropiado (no te hagas el canchero flaco)",
-      "multipleWords": "Por favor ingresa solo una palabra",
       "tooLong": "La palabra debe tener 30 caracteres o menos"
     }
   },

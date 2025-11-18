@@ -82,7 +82,6 @@
     },
     "errors": {
       "profanity": "Guess contains inappropriate language",
-      "multipleWords": "Please enter only one word",
       "tooLong": "Word must be 30 characters or less"
     }
   },

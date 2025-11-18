@@ -163,14 +163,6 @@ export default function Game({ locale }: GameProps) {
 
     const trimmedGuess = guess.trim()
 
-    // Validate: only one word (no spaces)
-    if (trimmedGuess.includes(' ')) {
-      setError(t('errors.multipleWords'))
-      setShake(true)
-      setTimeout(() => setShake(false), 500)
-      return
-    }
-
     // Validate: maximum 30 characters
     if (trimmedGuess.length > 30) {
       setError(t('errors.tooLong'))
