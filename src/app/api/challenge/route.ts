@@ -208,7 +208,7 @@ async function countPreviousCompletedChallenges(userId: string, currentChallenge
 
 function shouldShowRockyPopup(completedChallengesCount: number, timesOfRockyBonusUsed: number): boolean {
   // Primera vez: no mostrar Rocky
-  if (completedChallengesCount === 0) {
+  if (completedChallengesCount === 1) {
     return false
   }
 
