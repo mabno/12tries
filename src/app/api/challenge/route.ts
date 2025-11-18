@@ -323,7 +323,6 @@ async function handleAuthenticatedUser(
   locale: string,
   today: Date
 ): Promise<ChallengeResponse> {
-  const progress = await getOrCreateProgress(userId, challenge.id)
   const attempts = await getUserAttempts(userId, challenge.wordId, today)
   const previousCompleted = await countPreviousCompletedChallenges(userId, challenge.id)
   const timesOfRockyBonusUsed = await prisma.dailyProgress.count({
@@ -333,6 +332,7 @@ async function handleAuthenticatedUser(
     },
   })
   const shouldShowRocky = shouldShowRockyPopup(previousCompleted, timesOfRockyBonusUsed)
+  const progress = await getOrCreateProgress(userId, challenge.id)
 
   return buildChallengeResponse(challenge, progress, attempts, locale, false, shouldShowRocky)
 }
