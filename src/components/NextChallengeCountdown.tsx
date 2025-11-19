@@ -29,6 +29,10 @@ export default function NextChallengeCountdown({ locale = 'en' }: NextChallengeC
         setTimeLeft({ hours, minutes, seconds })
       } else {
         setTimeLeft({ hours: 0, minutes: 0, seconds: 0 })
+        // When countdown reaches zero, wait 3 seconds and reload the page
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000)
       }
     }
 
