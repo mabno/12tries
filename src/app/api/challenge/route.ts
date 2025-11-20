@@ -219,8 +219,8 @@ function shouldShowRockyPopup(completedChallengesCount: number, timesOfRockyBonu
     return true
   }
 
-  // Tercera vez en adelante: 25% de probabilidad (puede aparecer múltiples veces)
-  return Math.random() < 0.25
+  // Tercera vez en adelante: 40% de probabilidad (puede aparecer múltiples veces)
+  return Math.random() < 0.4
 }
 
 // ===========================
