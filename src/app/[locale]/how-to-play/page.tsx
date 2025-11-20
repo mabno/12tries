@@ -40,7 +40,7 @@ export default function HowToPlayPage({ params }: { params: { locale: string } }
       </div>
 
       {/* Main content */}
-      <main className='container mx-auto px-4 py-8 relative z-10 max-w-4xl'>
+      <main className='container mx-auto px-4 py-8 md:py-12 max-w-4xl relative z-10'>
         <div className='space-y-6'>
           {/* Rules Section */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

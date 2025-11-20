@@ -103,7 +103,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
       </div>
 
       {/* Main content */}
-      <main className='container mx-auto px-4 py-8 relative z-10'>
+      <main className='container mx-auto px-4 py-8 md:py-12 max-w-4xl relative z-10'>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           {/* Mode Tabs - Outside Card */}
           <div className='flex justify-center gap-2 mb-6'>
@@ -179,7 +179,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                         </Button>
                       </motion.div>
                       <motion.div
-                        className='px-4 md:px-5 py-2 md:py-2.5 bg-white dark:bg-gray-800 rounded-lg font-bold min-w-[120px] md:min-w-[160px] text-center text-gray-900 dark:text-gray-100 shadow-md border-2 border-gray-200 dark:border-gray-700 text-sm md:text-base'
+                        className='px-3 md:px-5 py-2 md:py-2.5 bg-white dark:bg-gray-800 rounded-lg font-bold min-w-[100px] md:min-w-[160px] text-center text-gray-900 dark:text-gray-100 shadow-md border-2 border-gray-200 dark:border-gray-700 text-xs md:text-base'
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                       >
@@ -310,7 +310,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                 <div className='space-y-3'>
                   {/* Table Headers - Desktop */}
                   <motion.div
-                    className='hidden md:grid grid-cols-[70px_1fr_100px_110px_100px_90px] lg:grid-cols-[80px_1fr_140px_140px_140px_100px] gap-2 lg:gap-4 px-3 lg:px-4 py-3 bg-gradient-to-r from-purple-100/50 via-pink-100/50 to-purple-100/50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-purple-900/30 rounded-lg border border-purple-200/50 dark:border-purple-700/50'
+                    className='hidden md:grid grid-cols-[60px_minmax(120px,1fr)_80px_140px_70px] lg:grid-cols-[70px_minmax(150px,1fr)_100px_160px_85px] gap-2 lg:gap-3 px-2 lg:px-4 py-3 bg-gradient-to-r from-purple-100/50 via-pink-100/50 to-purple-100/50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-purple-900/30 rounded-lg border border-purple-200/50 dark:border-purple-700/50'
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, type: 'spring' }}
@@ -335,11 +335,6 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                       <Zap className='h-3 w-3 lg:h-3.5 lg:w-3.5 text-purple-600 dark:text-purple-400 flex-shrink-0' />
                       <span className='text-[10px] lg:text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide lg:tracking-wider truncate'>
                         {t('bestMatchLabel')}
-                      </span>
-                    </div>
-                    <div className='flex items-center justify-center gap-1'>
-                      <span className='text-[10px] lg:text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide lg:tracking-wider'>
-                        {t('status')}
                       </span>
                     </div>
                     <div className='flex items-center justify-center gap-1'>
@@ -419,7 +414,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                           >
                             <CardContent className='p-0'>
                               {/* Desktop Layout */}
-                              <div className='hidden md:grid grid-cols-[70px_1fr_100px_110px_100px_90px] lg:grid-cols-[80px_1fr_140px_140px_140px_100px] gap-2 lg:gap-4 items-center px-3 lg:px-4 py-2.5 lg:py-3'>
+                              <div className='hidden md:grid grid-cols-[60px_minmax(120px,1fr)_80px_140px_70px] lg:grid-cols-[70px_minmax(150px,1fr)_100px_160px_85px] gap-2 lg:gap-3 items-center px-2 lg:px-4 py-2.5 lg:py-3'>
                                 {/* Rank */}
                                 <motion.div
                                   className='flex flex-col items-center justify-center relative'
@@ -512,49 +507,44 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                                   </motion.span>
                                 </motion.div>
 
-                                {/* Best Match */}
+                                {/* Best Match + Status Combined */}
                                 <motion.div
-                                  className='flex items-center justify-center'
-                                  whileHover={{ scale: 1.1 }}
-                                  transition={{ type: 'spring', stiffness: 400 }}
+                                  className='flex flex-col items-center justify-center gap-1.5'
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  transition={{ delay: index * 0.03 + 0.3 }}
                                 >
                                   <motion.div
                                     className='px-2 py-1 lg:px-3 lg:py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 rounded-full border border-purple-300 dark:border-purple-700'
                                     initial={{ scale: 0, rotate: -90 }}
                                     animate={{ scale: 1, rotate: 0 }}
+                                    whileHover={{ scale: 1.05 }}
                                     transition={{ delay: index * 0.03 + 0.3, type: 'spring', stiffness: 300 }}
                                   >
                                     <span className='text-sm lg:text-base font-bold text-purple-800 dark:text-purple-200'>
                                       {(entry.bestSimilarity * 100).toFixed(1)}%
                                     </span>
                                   </motion.div>
-                                </motion.div>
-
-                                {/* Status */}
-                                <motion.div
-                                  className='flex items-center justify-center'
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  transition={{ delay: index * 0.03 + 0.35 }}
-                                >
                                   <motion.div
-                                    className={`flex items-center gap-1 lg:gap-1.5 px-2 py-1 lg:px-3 lg:py-1.5 rounded-full font-semibold text-xs lg:text-sm ${
+                                    className={`flex items-center gap-1 px-2 py-0.5 lg:px-2.5 lg:py-1 rounded-full font-semibold text-[10px] lg:text-xs ${
                                       entry.solved
                                         ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
                                         : 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800'
                                     }`}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
                                     whileHover={{ scale: 1.05 }}
-                                    transition={{ type: 'spring', stiffness: 400 }}
+                                    transition={{ delay: index * 0.03 + 0.35, type: 'spring', stiffness: 400 }}
                                   >
                                     {entry.solved ? (
                                       <>
-                                        <Trophy className='h-3 w-3 lg:h-3.5 lg:w-3.5' />
-                                        <span className='hidden lg:inline'>{t('solved')}</span>
+                                        <Trophy className='h-2.5 w-2.5 lg:h-3 lg:w-3' />
+                                        <span>{t('solved')}</span>
                                       </>
                                     ) : (
                                       <>
-                                        <Target className='h-3 w-3 lg:h-3.5 lg:w-3.5' />
-                                        <span className='hidden lg:inline'>{t('attempted')}</span>
+                                        <Target className='h-2.5 w-2.5 lg:h-3 lg:w-3' />
+                                        <span>{t('attempted')}</span>
                                       </>
                                     )}
                                   </motion.div>
@@ -716,7 +706,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                 <div className='space-y-3'>
                   {/* Table Headers - Desktop */}
                   <motion.div
-                    className='hidden md:grid grid-cols-[80px_1fr_200px] lg:grid-cols-[100px_1fr_250px] gap-4 px-4 py-3 bg-gradient-to-r from-purple-100/50 via-pink-100/50 to-purple-100/50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-purple-900/30 rounded-lg border border-purple-200/50 dark:border-purple-700/50'
+                    className='hidden md:grid grid-cols-[70px_minmax(120px,1fr)_120px] lg:grid-cols-[90px_minmax(150px,1fr)_150px] gap-3 lg:gap-4 px-2 lg:px-4 py-3 bg-gradient-to-r from-purple-100/50 via-pink-100/50 to-purple-100/50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-purple-900/30 rounded-lg border border-purple-200/50 dark:border-purple-700/50'
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, type: 'spring' }}
@@ -800,7 +790,7 @@ export default function LeaderboardPage({ params }: { params: { locale: string }
                           >
                             <CardContent className='p-0'>
                               {/* Desktop Layout */}
-                              <div className='hidden md:grid grid-cols-[80px_1fr_200px] lg:grid-cols-[100px_1fr_250px] gap-4 items-center px-4 py-3'>
+                              <div className='hidden md:grid grid-cols-[70px_minmax(120px,1fr)_120px] lg:grid-cols-[90px_minmax(150px,1fr)_150px] gap-3 lg:gap-4 items-center px-2 lg:px-4 py-3'>
                                 {/* Rank */}
                                 <motion.div
                                   className='flex flex-col items-center justify-center relative'
