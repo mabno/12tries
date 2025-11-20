@@ -1,13 +1,17 @@
 #!/bin/bash
 
 # Variables
-URL="https://api.example.com/endpoint"  # Replace with your API URL
-ADMIN_API_KEY="${ADMIN_API_KEY}"                    # Get API key from environment variable
+URL="${API_REMINDER_URL}"
+ADMIN_API_KEY="${ADMIN_API_KEY}"
 
-# Check if API_KEY environment variable is set
+# Check if required environment variables are set
 if [ -z "$ADMIN_API_KEY" ]; then
-    echo "Error: API_KEY environment variable is not set"
-    echo "Please set it using: export API_KEY='your-api-key-here'"
+    echo "Error: ADMIN_API_KEY environment variable is not set"
+    exit 1
+fi
+
+if [ -z "$API_REMINDER_URL" ]; then
+    echo "Error: API_REMINDER_URL environment variable is not set"
     exit 1
 fi
 
