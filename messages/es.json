@@ -183,5 +183,95 @@
     "decline": "No Gracias",
     "believes": "¡Rocky confía en ti!",
     "cornerMessage": "Dame huesitos!"
+  },
+  "reminders": {
+    "buttonText": "¿Recibir recordatorios del próximo desafío?",
+    "dialogTitle": "Recordatorios de Desafíos",
+    "dialogDescription": "Te enviaremos un correo cuando un nuevo desafío esté disponible. Puedes cancelar la suscripción en cualquier momento.",
+    "emailLabel": "Dirección de Correo",
+    "emailPlaceholder": "tu@correo.com",
+    "privacyNotice": "Tu información está protegida y no será utilizada para ningún otro propósito.",
+    "termsCheckboxPrefix": "Acepto los",
+    "termsCheckboxAnd": "y la",
+    "termsLink": "Términos y Condiciones",
+    "privacyLink": "Política de Privacidad",
+    "confirmButton": "Suscribirme",
+    "cancelButton": "Cancelar",
+    "successMessage": "¡Suscripción exitosa! Te recordaremos cuando el próximo desafío esté listo.",
+    "errorMessage": "Algo salió mal. Por favor intenta de nuevo.",
+    "alreadySubscribed": "¡Ya estás suscrito a los recordatorios!",
+    "invalidEmail": "Por favor ingresa una dirección de correo válida",
+    "mustAcceptTerms": "Debes aceptar los términos y condiciones",
+    "unsubscribed": {
+      "title": "Suscripción Cancelada Exitosamente",
+      "message": "Te has dado de baja de los recordatorios de desafíos.",
+      "comeback": "Nos entristece verte partir, pero siempre puedes volver y jugar cuando quieras!",
+      "backToGame": "Volver al Juego"
+    }
+  },
+  "footer": {
+    "madeWith": "Hecho con",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad"
+  },
+  "terms": {
+    "title": "Términos y Condiciones",
+    "section1": {
+      "title": "1. Aceptación de Términos",
+      "content": "Al acceder y usar 12Tries, aceptas y te comprometes a cumplir con los términos y disposiciones de este acuerdo. Si no estás de acuerdo con estos términos, por favor no uses nuestro servicio."
+    },
+    "section2": {
+      "title": "2. Uso del Servicio",
+      "content": "12Tries proporciona un juego diario de adivinanza de palabras. Aceptas usar el servicio solo para propósitos legales y de una manera que no infrinja los derechos de otros."
+    },
+    "section3": {
+      "title": "3. Cuentas de Usuario",
+      "content": "Puedes jugar como invitado o crear una cuenta usando autenticación de Google. Eres responsable de mantener la confidencialidad de la información de tu cuenta."
+    },
+    "section4": {
+      "title": "4. Recordatorios por Correo",
+      "content": "Al suscribirte a los recordatorios por correo, consientes recibir notificaciones cuando nuevos desafíos estén disponibles. Puedes cancelar la suscripción en cualquier momento a través del enlace proporcionado en cada correo."
+    },
+    "section5": {
+      "title": "5. Propiedad Intelectual",
+      "content": "Todo el contenido, características y funcionalidad de 12Tries son de nuestra propiedad y están protegidos por leyes internacionales de derechos de autor, marcas registradas y otras leyes de propiedad intelectual."
+    },
+    "section6": {
+      "title": "6. Limitación de Responsabilidad",
+      "content": "12Tries se proporciona 'tal cual' sin garantías de ningún tipo. No seremos responsables de ningún daño derivado del uso o la imposibilidad de usar nuestro servicio."
+    },
+    "lastUpdated": "Última actualización: 20 de noviembre de 2025"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "section1": {
+      "title": "1. Información que Recopilamos",
+      "content": "Recopilamos información que nos proporcionas directamente, incluyendo cuando creas una cuenta, te suscribes a recordatorios o usas nuestros servicios."
+    },
+    "section2": {
+      "title": "2. Tipos de Información",
+      "content": "Podemos recopilar la siguiente información:",
+      "item1": "Dirección de correo electrónico (cuando te suscribes a recordatorios o inicias sesión con Google)",
+      "item2": "Apodo (para usuarios invitados)",
+      "item3": "Progreso del juego e intentos",
+      "item4": "Dirección IP (para propósitos de seguridad y limitación de tasa)"
+    },
+    "section3": {
+      "title": "3. Cómo Usamos tu Información",
+      "content": "Usamos la información que recopilamos para proporcionar, mantener y mejorar nuestros servicios, enviarte recordatorios por correo (si estás suscrito) y proteger contra abusos."
+    },
+    "section4": {
+      "title": "4. Compartir Información",
+      "content": "No vendemos, intercambiamos ni transferimos tu información personal a terceros. Tu correo solo se usará para enviar recordatorios de desafíos si te has suscrito."
+    },
+    "section5": {
+      "title": "5. Seguridad de Datos",
+      "content": "Implementamos medidas de seguridad apropiadas para proteger tu información personal y garantizar su confidencialidad en todo momento."
+    },
+    "section6": {
+      "title": "6. Tus Derechos",
+      "content": "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento. Puedes cancelar la suscripción a recordatorios por correo haciendo clic en el enlace de cancelación en cualquier correo de recordatorio."
+    },
+    "lastUpdated": "Última actualización: 20 de noviembre de 2025"
   }
 }

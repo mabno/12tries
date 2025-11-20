@@ -1,8 +1,15 @@
 'use client'
 import { motion } from 'framer-motion'
 import { Twitter } from 'lucide-react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function Footer() {
+  const params = useParams()
+  const locale = (params?.locale as string) || 'en'
+  const t = useTranslations('footer')
+
   return (
     <motion.footer
       initial={{ opacity: 0 }}
@@ -13,7 +20,7 @@ export default function Footer() {
       <div className='container mx-auto px-4'>
         <div className='flex flex-col items-center gap-4'>
           <motion.p whileHover={{ scale: 1.05 }} className='text-sm text-muted-foreground flex items-center gap-2'>
-            Made with{' '}
+            {t('madeWith')}{' '}
             <motion.span
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
@@ -22,6 +29,22 @@ export default function Footer() {
               ❤️
             </motion.span>
           </motion.p>
+
+          <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+            <Link
+              href={`/${locale}/terms`}
+              className='hover:text-purple-600 dark:hover:text-purple-400 transition-colors underline-offset-4 hover:underline'
+            >
+              {t('terms')}
+            </Link>
+            <span className='text-gray-300 dark:text-gray-700'>•</span>
+            <Link
+              href={`/${locale}/privacy`}
+              className='hover:text-purple-600 dark:hover:text-purple-400 transition-colors underline-offset-4 hover:underline'
+            >
+              {t('privacy')}
+            </Link>
+          </div>
 
           <motion.a
             href='https://x.com/Mabno5'
