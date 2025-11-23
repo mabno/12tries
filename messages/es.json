@@ -261,25 +261,30 @@
       "item1": "Dirección de correo electrónico (cuando te suscribes a recordatorios o inicias sesión con Google)",
       "item2": "Apodo (para usuarios invitados)",
       "item3": "Progreso del juego e intentos",
-      "item4": "Dirección IP (para propósitos de seguridad y limitación de tasa)"
+      "item4": "Dirección IP (para propósitos de seguridad y limitación de tasa)",
+      "item5": "Datos de uso y analítica mediante cookies (si se ha consentido)"
     },
     "section3": {
-      "title": "3. Cómo Usamos tu Información",
-      "content": "Usamos la información que recopilamos para proporcionar, mantener y mejorar nuestros servicios, enviarte recordatorios por correo (si estás suscrito) y proteger contra abusos."
+      "title": "3. Cookies y Analítica",
+      "content": "Utilizamos Google Analytics para entender cómo los visitantes interactúan con nuestro sitio web. Este servicio usa cookies para recopilar información como visitas a páginas, tiempo en el sitio e interacciones de usuarios. Puedes controlar las preferencias de cookies a través de nuestro banner de consentimiento. Al aceptar las cookies, consientes la recopilación de estos datos. Los datos de Google Analytics son anonimizados y se usan únicamente para mejorar nuestro servicio."
     },
     "section4": {
-      "title": "4. Compartir Información",
-      "content": "No vendemos, intercambiamos ni transferimos tu información personal a terceros. Tu correo solo se usará para enviar recordatorios de desafíos si te has suscrito."
+      "title": "4. Cómo Usamos tu Información",
+      "content": "Usamos la información que recopilamos para proporcionar, mantener y mejorar nuestros servicios, enviarte recordatorios por correo (si estás suscrito), analizar patrones de uso y mejorar la experiencia del usuario, y proteger contra abusos."
     },
     "section5": {
-      "title": "5. Seguridad de Datos",
-      "content": "Implementamos medidas de seguridad apropiadas para proteger tu información personal y garantizar su confidencialidad en todo momento."
+      "title": "5. Compartir Información",
+      "content": "No vendemos, intercambiamos ni transferimos tu información personal a terceros. Tu correo solo se usará para enviar recordatorios de desafíos si te has suscrito. Los datos analíticos recopilados por Google Analytics están sujetos a la Política de Privacidad de Google."
     },
     "section6": {
-      "title": "6. Tus Derechos",
-      "content": "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento. Puedes cancelar la suscripción a recordatorios por correo haciendo clic en el enlace de cancelación en cualquier correo de recordatorio."
+      "title": "6. Seguridad de Datos",
+      "content": "Implementamos medidas de seguridad apropiadas para proteger tu información personal y garantizar su confidencialidad en todo momento."
     },
-    "lastUpdated": "Última actualización: 20 de noviembre de 2025"
+    "section7": {
+      "title": "7. Tus Derechos",
+      "content": "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento. Puedes cancelar la suscripción a recordatorios por correo haciendo clic en el enlace de cancelación en cualquier correo de recordatorio. También puedes retirar tu consentimiento de cookies en cualquier momento borrando las cookies de tu navegador."
+    },
+    "lastUpdated": "Última actualización: 23 de noviembre de 2025"
   },
   "embedInfo": {
     "title": "Añade Este Juego a Tu Sitio Web",

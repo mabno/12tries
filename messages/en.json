@@ -261,25 +261,30 @@
       "item1": "Email address (when you subscribe to reminders or sign in with Google)",
       "item2": "Nickname (for guest users)",
       "item3": "Game progress and attempts",
-      "item4": "IP address (for security and rate limiting purposes)"
+      "item4": "IP address (for security and rate limiting purposes)",
+      "item5": "Usage data and analytics through cookies (if consented)"
     },
     "section3": {
-      "title": "3. How We Use Your Information",
-      "content": "We use the information we collect to provide, maintain, and improve our services, to send you email reminders (if subscribed), and to protect against abuse."
+      "title": "3. Cookies and Analytics",
+      "content": "We use Google Analytics to understand how visitors interact with our website. This service uses cookies to collect information such as page visits, time spent on site, and user interactions. You can control cookie preferences through our cookie consent banner. By accepting cookies, you consent to the collection of this data. Google Analytics data is anonymized and used solely for improving our service."
     },
     "section4": {
-      "title": "4. Information Sharing",
-      "content": "We do not sell, trade, or otherwise transfer your personal information to third parties. Your email will only be used to send challenge reminders if you have subscribed."
+      "title": "4. How We Use Your Information",
+      "content": "We use the information we collect to provide, maintain, and improve our services, to send you email reminders (if subscribed), to analyze usage patterns and improve user experience, and to protect against abuse."
     },
     "section5": {
-      "title": "5. Data Security",
-      "content": "We implement appropriate security measures to protect your personal information and ensure it remains confidential at all times."
+      "title": "5. Information Sharing",
+      "content": "We do not sell, trade, or otherwise transfer your personal information to third parties. Your email will only be used to send challenge reminders if you have subscribed. Analytics data collected by Google Analytics is subject to Google's Privacy Policy."
     },
     "section6": {
-      "title": "6. Your Rights",
-      "content": "You have the right to access, correct, or delete your personal information at any time. You can unsubscribe from email reminders by clicking the unsubscribe link in any reminder email."
+      "title": "6. Data Security",
+      "content": "We implement appropriate security measures to protect your personal information and ensure it remains confidential at all times."
     },
-    "lastUpdated": "Last updated: November 20, 2025"
+    "section7": {
+      "title": "7. Your Rights",
+      "content": "You have the right to access, correct, or delete your personal information at any time. You can unsubscribe from email reminders by clicking the unsubscribe link in any reminder email. You can also withdraw your cookie consent at any time by clearing your browser cookies."
+    },
+    "lastUpdated": "Last updated: November 23, 2025"
   },
   "embedInfo": {
     "title": "Embed This Game On Your Website",

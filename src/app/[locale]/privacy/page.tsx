@@ -25,6 +25,7 @@ export default function PrivacyPage() {
               <li className='text-gray-700 dark:text-gray-300'>{t('section2.item2')}</li>
               <li className='text-gray-700 dark:text-gray-300'>{t('section2.item3')}</li>
               <li className='text-gray-700 dark:text-gray-300'>{t('section2.item4')}</li>
+              <li className='text-gray-700 dark:text-gray-300'>{t('section2.item5')}</li>
             </ul>
           </section>
 
@@ -46,6 +47,11 @@ export default function PrivacyPage() {
           <section className='mb-8'>
             <h2 className='text-2xl font-semibold mb-4'>{t('section6.title')}</h2>
             <p className='text-gray-700 dark:text-gray-300 mb-4'>{t('section6.content')}</p>
+          </section>
+
+          <section className='mb-8'>
+            <h2 className='text-2xl font-semibold mb-4'>{t('section7.title')}</h2>
+            <p className='text-gray-700 dark:text-gray-300 mb-4'>{t('section7.content')}</p>
           </section>
 
           <section className='mb-8'>
