@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Home, Trophy, HelpCircle, Menu, X } from 'lucide-react'
+import { Home, Trophy, HelpCircle, Menu, X, Code2 } from 'lucide-react'
 import AuthButton from '@/components/AuthButton'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import ShareButton from '@/components/ShareButton'
@@ -20,6 +20,7 @@ export default function Header({ locale }: { locale: string }) {
     { href: `/${locale}`, icon: Home, label: t('home') },
     { href: `/${locale}/leaderboard`, icon: Trophy, label: t('leaderboard') },
     { href: `/${locale}/how-to-play`, icon: HelpCircle, label: t('howToPlay') },
+    { href: `/${locale}/embed-info`, icon: Code2, label: t('embed') },
   ]
 
   return (

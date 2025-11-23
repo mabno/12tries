@@ -44,6 +44,13 @@ export default function Footer() {
             >
               {t('privacy')}
             </Link>
+            <span className='text-gray-300 dark:text-gray-700'>•</span>
+            <Link
+              href={`/${locale}/embed-info`}
+              className='hover:text-purple-600 dark:hover:text-purple-400 transition-colors underline-offset-4 hover:underline'
+            >
+              {t('embed')}
+            </Link>
           </div>
 
           <motion.a

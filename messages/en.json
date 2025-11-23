@@ -130,7 +130,8 @@
     "home": "Home",
     "howToPlay": "How to Play",
     "leaderboard": "Leaderboard",
-    "language": "Language"
+    "language": "Language",
+    "embed": "Add to Your Site"
   },
   "howToPlay": {
     "title": "How to Play",
@@ -212,7 +213,8 @@
   "footer": {
     "madeWith": "Made with",
     "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "embed": "Add to Your Site"
   },
   "terms": {
     "title": "Terms & Conditions",
@@ -273,5 +275,50 @@
       "content": "You have the right to access, correct, or delete your personal information at any time. You can unsubscribe from email reminders by clicking the unsubscribe link in any reminder email."
     },
     "lastUpdated": "Last updated: November 20, 2025"
+  },
+  "embedInfo": {
+    "title": "Embed This Game On Your Website",
+    "subtitle": "Add the daily word guessing challenge to your site with a simple iframe",
+    "feature1Title": "Easy Setup",
+    "feature1Text": "Just copy and paste one line of HTML code",
+    "feature2Title": "Fully Functional",
+    "feature2Text": "Includes game play and top 5 leaderboard",
+    "feature3Title": "No Auth Needed",
+    "feature3Text": "Players just pick a nickname and play",
+    "embedCodeTitle": "Embed Code",
+    "embedCodeDesc": "Copy this code and paste it into your HTML",
+    "languageLabel": "Language",
+    "english": "English",
+    "spanish": "Spanish",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "livePreviewTitle": "Live Preview",
+    "livePreviewDesc": "See how the embed looks",
+    "docsTitle": "Documentation & Resources",
+    "testEmbedTitle": "Test Embed",
+    "testEmbedDesc": "Open the embed version directly",
+    "openEmbed": "Open Embed",
+    "noteTitle": "Note:",
+    "noteText": "The embed version is responsive and works on all devices. Recommended minimum width: 320px. For best experience use 768px+ width.",
+    "backToGame": "Back to Game"
+  },
+  "embed": {
+    "gameTitle": "Guess the Word",
+    "enterNickname": "Enter a nickname to play",
+    "yourNickname": "Your nickname",
+    "startPlaying": "Start Playing",
+    "playingAs": "Playing as:",
+    "youWon": "🎉 You Won!",
+    "gameOver": "😢 Game Over",
+    "attemptsLeft": "Attempts Left",
+    "category": "Category:",
+    "enterGuess": "Enter your guess...",
+    "theWordWas": "The word was:",
+    "solvedIn": "Solved in {count} attempts!",
+    "yourAttempts": "Your Attempts:",
+    "todayLeaderboard": "Today's Leaderboard",
+    "attempts": "attempts",
+    "noPlayers": "No one has played today yet. Be the first!",
+    "playFullVersion": "Play the full version →"
   }
 }

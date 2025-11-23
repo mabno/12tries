@@ -7,6 +7,11 @@ const intlMiddleware = createMiddleware({
 })
 
 export default function middleware(request: NextRequest) {
+  // Skip i18n middleware for embed route
+  if (request.nextUrl.pathname.startsWith('/embed')) {
+    return
+  }
+
   return intlMiddleware(request)
 }
 

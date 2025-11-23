@@ -216,6 +216,31 @@ guess-the-word/
 5. **Refina tu Búsqueda**: Usa la similitud semántica para acercarte
 6. **Gana**: ¡Adivina la palabra exacta!
 
+## 📦 Versión Embebible (iframe)
+
+El juego incluye una **versión simplificada** que puede ser embebida en otras páginas web usando iframes:
+
+- ✅ Funcionalidad completa del juego
+- ✅ Leaderboard de top 5 jugadores
+- ✅ Soporte multiidioma (inglés y español)
+- ✅ Sin necesidad de autenticación
+- ✅ UI optimizada para embeds
+- ✅ Responsive y ligera
+
+### Cómo Usar
+
+```html
+<!-- English -->
+<iframe src="https://tu-dominio.com/embed?lang=en" width="100%" height="800" frameborder="0" title="Guess the Word Game"></iframe>
+
+<!-- Spanish -->
+<iframe src="https://tu-dominio.com/embed?lang=es" width="100%" height="800" frameborder="0" title="Guess the Word Game"></iframe>
+```
+
+**Documentación completa**: [`docs/EMBED.md`](docs/EMBED.md)
+
+**Ver info y preview**: Navega a `/[locale]/embed-info` en la aplicación
+
 ## 🔧 Scripts Disponibles
 
 ```bash

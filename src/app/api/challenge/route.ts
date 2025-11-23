@@ -37,7 +37,6 @@ interface AttemptResponse {
 
 interface ChallengeResponse {
   challengeId: string
-  wordLength: number
   category: string
   attemptsUsed: number
   attemptsRemaining: number
@@ -227,10 +226,6 @@ function shouldShowRockyPopup(completedChallengesCount: number, timesOfRockyBonu
 // RESPONSE BUILDERS
 // ===========================
 
-function getLocalizedWordLength(word: Word, locale: string): number {
-  return locale === 'es' ? word.textEs.length : word.textEn.length
-}
-
 function getLocalizedCategory(challenge: ChallengeWithWord, locale: string): string {
   return locale === 'es' ? challenge.categoryEs || DEFAULT_CATEGORY : challenge.categoryEn || DEFAULT_CATEGORY
 }
@@ -256,7 +251,6 @@ function buildChallengeResponse(
 
   return {
     challengeId: challenge.id,
-    wordLength: getLocalizedWordLength(challenge.word, locale),
     category: getLocalizedCategory(challenge, locale),
     attemptsUsed: progress?.attemptsCount || 0,
     attemptsRemaining: maxAttempts - (progress?.attemptsCount || 0),

@@ -130,7 +130,8 @@
     "home": "Inicio",
     "howToPlay": "Cómo Jugar",
     "leaderboard": "Clasificación",
-    "language": "Idioma"
+    "language": "Idioma",
+    "embed": "Añadir a tu Sitio"
   },
   "howToPlay": {
     "title": "Cómo Jugar",
@@ -212,7 +213,8 @@
   "footer": {
     "madeWith": "Hecho con",
     "terms": "Términos y Condiciones",
-    "privacy": "Política de Privacidad"
+    "privacy": "Política de Privacidad",
+    "embed": "Añadir a tu Sitio"
   },
   "terms": {
     "title": "Términos y Condiciones",
@@ -273,5 +275,50 @@
       "content": "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento. Puedes cancelar la suscripción a recordatorios por correo haciendo clic en el enlace de cancelación en cualquier correo de recordatorio."
     },
     "lastUpdated": "Última actualización: 20 de noviembre de 2025"
+  },
+  "embedInfo": {
+    "title": "Añade Este Juego a Tu Sitio Web",
+    "subtitle": "Agrega el desafío diario de adivinar palabras a tu sitio con un simple iframe",
+    "feature1Title": "Configuración Fácil",
+    "feature1Text": "Solo copia y pega una línea de código HTML",
+    "feature2Title": "Totalmente Funcional",
+    "feature2Text": "Incluye el juego completo y top 5 de clasificación",
+    "feature3Title": "Sin Autenticación",
+    "feature3Text": "Los jugadores solo eligen un apodo y juegan",
+    "embedCodeTitle": "Código de Embed",
+    "embedCodeDesc": "Copia este código y pégalo en tu HTML",
+    "languageLabel": "Idioma",
+    "english": "Inglés",
+    "spanish": "Español",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "livePreviewTitle": "Vista Previa en Vivo",
+    "livePreviewDesc": "Mira cómo se ve el embed",
+    "docsTitle": "Documentación y Recursos",
+    "testEmbedTitle": "Probar Embed",
+    "testEmbedDesc": "Abrir la versión embed directamente",
+    "openEmbed": "Abrir Embed",
+    "noteTitle": "Nota:",
+    "noteText": "La versión embed es responsive y funciona en todos los dispositivos. Ancho mínimo recomendado: 320px. Para la mejor experiencia usa 768px+ de ancho.",
+    "backToGame": "Volver al Juego"
+  },
+  "embed": {
+    "gameTitle": "Adivina la Palabra",
+    "enterNickname": "Ingresa un apodo para jugar",
+    "yourNickname": "Tu apodo",
+    "startPlaying": "Comenzar a Jugar",
+    "playingAs": "Jugando como:",
+    "youWon": "🎉 ¡Ganaste!",
+    "gameOver": "😢 Juego Terminado",
+    "attemptsLeft": "Intentos Restantes",
+    "category": "Categoría:",
+    "enterGuess": "Ingresa tu intento...",
+    "theWordWas": "La palabra era:",
+    "solvedIn": "¡Resuelto en {count} intentos!",
+    "yourAttempts": "Tus Intentos:",
+    "todayLeaderboard": "Clasificación de Hoy",
+    "attempts": "intentos",
+    "noPlayers": "Nadie ha jugado hoy aún. ¡Sé el primero!",
+    "playFullVersion": "Juega la versión completa →"
   }
 }

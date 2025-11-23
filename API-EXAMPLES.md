@@ -11,7 +11,7 @@
 ```json
 {
   "challengeId": "clx123...",
-  "wordLength": 8,
+  "category": "Technology",
   "attemptsUsed": 3,
   "attemptsRemaining": 7,
   "solved": false,
@@ -22,7 +22,10 @@
       "attemptedAt": "2024-01-15T10:30:00Z"
     }
   ],
-  "bestSimilarity": 0.65
+  "bestSimilarity": 0.65,
+  "anonymous": false,
+  "shouldShowRocky": false,
+  "rockyBonusUsed": false
 }
 ```
 
