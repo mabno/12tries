@@ -30,8 +30,8 @@ export default function Header({ locale }: { locale: string }) {
       transition={{ type: 'spring', stiffness: 100 }}
       className='border-b-2 border-purple-200/50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 shadow-lg'
     >
-      <div className='container mx-auto px-4 py-4'>
-        <div className='flex items-center justify-between'>
+      <div className='container mx-auto px-2 sm:px-4 py-3 sm:py-4'>
+        <div className='flex items-center justify-between gap-2'>
           <div className='flex gap-6'>
             {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }}>
@@ -52,15 +52,15 @@ export default function Header({ locale }: { locale: string }) {
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className='hidden md:flex items-center gap-2'>
+            <div className='hidden lg:flex items-center gap-1 xl:gap-2'>
               {navigationLinks.map((link) => {
                 const Icon = link.icon
                 return (
                   <motion.div key={link.href} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link href={link.href}>
-                      <Button variant='ghost' className='gap-2 hover:bg-purple-100 dark:hover:bg-purple-900/30'>
+                      <Button variant='ghost' className='gap-1 xl:gap-2 px-2 xl:px-4 hover:bg-purple-100 dark:hover:bg-purple-900/30'>
                         <Icon className='h-4 w-4' />
-                        <span>{link.label}</span>
+                        <span className='text-sm xl:text-base'>{link.label}</span>
                       </Button>
                     </Link>
                   </motion.div>
@@ -69,8 +69,8 @@ export default function Header({ locale }: { locale: string }) {
             </div>
           </div>
           {/* Right side: Share + Language + Auth + Mobile Menu */}
-          <div className='flex items-center gap-2'>
-            <div className='hidden sm:flex items-center gap-2'>
+          <div className='flex items-center gap-1 sm:gap-2'>
+            <div className='hidden sm:flex items-center gap-1 xl:gap-2'>
               <LanguageSwitcher />
               <ShareButton />
               <AuthButton />
@@ -80,7 +80,7 @@ export default function Header({ locale }: { locale: string }) {
             <Button
               variant='ghost'
               size='icon'
-              className='md:hidden hover:bg-purple-100 dark:hover:bg-purple-900/30'
+              className='lg:hidden hover:bg-purple-100 dark:hover:bg-purple-900/30'
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className='h-5 w-5' /> : <Menu className='h-5 w-5' />}
@@ -96,9 +96,9 @@ export default function Header({ locale }: { locale: string }) {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className='md:hidden overflow-hidden'
+              className='lg:hidden overflow-hidden'
             >
-              <div className='py-4 space-y-2 border-t border-purple-200/50 mt-4'>
+              <div className='py-3 sm:py-4 space-y-2 border-t border-purple-200/50 mt-3 sm:mt-4'>
                 {navigationLinks.map((link) => {
                   const Icon = link.icon
                   return (

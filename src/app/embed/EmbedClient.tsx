@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getSimilarityColor, getSimilarityLabel } from '@/lib/utils'
-import { Send, Trophy, Crown, Medal, Award, Target } from 'lucide-react'
+import { Send, Trophy, Crown, Medal, Award, Target, HelpCircle } from 'lucide-react'
 import Confetti from '@/components/ui/confetti'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -47,6 +48,21 @@ const messages = {
       attempts: 'attempts',
       noPlayers: 'No one has played today yet. Be the first!',
       playFullVersion: 'Play the full version →',
+      howToPlay: 'How to Play',
+      howToPlayTitle: 'How to Play',
+      howToPlayDesc: 'Simple guide to get started',
+      objective: 'Game Objective',
+      objectiveText: 'Guess the secret word of the day. You have 12 tries to find it!',
+      howItWorks: 'How does it work?',
+      howItWorksText:
+        'When you write a word and send it, the game tells you how similar your word is to the secret word. The closer to 100%, the more similar your word is in meaning.',
+      exampleTitle: 'Example',
+      exampleText:
+        'If the secret word is "happy" and you write "joyful", you\'ll get a high percentage because both words mean similar things. If you write "table", you\'ll get a low percentage because they have nothing in common.',
+      tips: 'Helpful Tips',
+      tip1: 'Think about words that mean the same or similar things',
+      tip2: 'Pay attention to the category - it gives you a big clue!',
+      tip3: "Each guess shows you if you're on the right track or need to think differently",
     },
   },
   es: {
@@ -68,6 +84,21 @@ const messages = {
       attempts: 'intentos',
       noPlayers: 'Nadie ha jugado hoy aún. ¡Sé el primero!',
       playFullVersion: 'Juega la versión completa →',
+      howToPlay: 'Cómo Jugar',
+      howToPlayTitle: 'Cómo Jugar',
+      howToPlayDesc: 'Guía simple para empezar',
+      objective: 'Objetivo del Juego',
+      objectiveText: 'Adivina la palabra secreta del día. ¡Tienes 12 intentos para encontrarla!',
+      howItWorks: '¿Cómo funciona?',
+      howItWorksText:
+        'Cuando escribes una palabra y la envías, el juego te dice qué tan parecida es tu palabra a la palabra secreta. Mientras más cerca del 100%, más parecido es el significado.',
+      exampleTitle: 'Ejemplo',
+      exampleText:
+        'Si la palabra secreta es "feliz" y tú escribes "alegre", obtendrás un porcentaje alto porque ambas palabras significan cosas parecidas. Si escribes "mesa", obtendrás un porcentaje bajo porque no tienen nada que ver.',
+      tips: 'Consejos Útiles',
+      tip1: 'Piensa en palabras que signifiquen lo mismo o algo parecido',
+      tip2: '¡Fíjate en la categoría - te da una gran pista!',
+      tip3: 'Cada intento te muestra si vas por buen camino o necesitas pensar diferente',
     },
   },
 }
@@ -277,7 +308,61 @@ export default function EmbedClient() {
 
       <div className='max-w-4xl mx-auto space-y-4'>
         <div className='text-center mb-4'>
-          <h1 className='text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>{t.gameTitle}</h1>
+          <div className='flex flex-col items-center gap-3 mb-2'>
+            <h1 className='text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>{t.gameTitle}</h1>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant='outline' size='sm' className='gap-2 hover:bg-purple-100'>
+                  <HelpCircle className='h-4 w-4' />
+                  {t.howToPlay}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
+                <DialogHeader>
+                  <DialogTitle className='text-2xl'>{t.howToPlayTitle}</DialogTitle>
+                  <DialogDescription>{t.howToPlayDesc}</DialogDescription>
+                </DialogHeader>
+                <div className='space-y-4 mt-4'>
+                  {/* Objective */}
+                  <div className='bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg'>
+                    <h3 className='font-bold text-lg mb-2 text-purple-900 dark:text-purple-100'>{t.objective}</h3>
+                    <p className='text-gray-700 dark:text-gray-300'>{t.objectiveText}</p>
+                  </div>
+
+                  {/* How it works */}
+                  <div>
+                    <h3 className='font-bold text-lg mb-2'>{t.howItWorks}</h3>
+                    <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>{t.howItWorksText}</p>
+                  </div>
+
+                  {/* Example */}
+                  <div className='bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500'>
+                    <h3 className='font-bold text-lg mb-2 text-blue-900 dark:text-blue-100'>{t.exampleTitle}</h3>
+                    <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>{t.exampleText}</p>
+                  </div>
+
+                  {/* Tips */}
+                  <div>
+                    <h3 className='font-bold text-lg mb-3'>{t.tips}</h3>
+                    <ul className='space-y-2'>
+                      <li className='flex gap-2'>
+                        <span className='text-purple-600 font-bold'>•</span>
+                        <span className='text-gray-600 dark:text-gray-300'>{t.tip1}</span>
+                      </li>
+                      <li className='flex gap-2'>
+                        <span className='text-purple-600 font-bold'>•</span>
+                        <span className='text-gray-600 dark:text-gray-300'>{t.tip2}</span>
+                      </li>
+                      <li className='flex gap-2'>
+                        <span className='text-purple-600 font-bold'>•</span>
+                        <span className='text-gray-600 dark:text-gray-300'>{t.tip3}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
           <p className='text-sm text-gray-600'>
             {t.playingAs} {nickname}
           </p>
