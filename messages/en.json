@@ -210,6 +210,11 @@
       "backToGame": "Back to Game"
     }
   },
+  "cookies": {
+    "message": "We use cookies to improve your experience and analyze site traffic. By clicking 'Accept', you consent to our use of cookies.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
   "footer": {
     "madeWith": "Made with",
     "terms": "Terms & Conditions",

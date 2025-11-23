@@ -6,6 +6,7 @@ import { Providers } from '@/components/Providers'
 import '../globals.css'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import CookieConsent from '@/components/CookieConsent'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -76,6 +77,18 @@ export default async function RootLayout({ children, params: { locale } }: { chi
     <html lang={locale}>
       <head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+        {/* Google tag (gtag.js) */}
+        <script async src='https://www.googletagmanager.com/gtag/js?id=G-XX3NP0W4F2'></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XX3NP0W4F2');
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <Providers>
@@ -84,6 +97,7 @@ export default async function RootLayout({ children, params: { locale } }: { chi
             {children}
             {/* Footer */}
             <Footer />
+            <CookieConsent />
           </NextIntlClientProvider>
         </Providers>
       </body>

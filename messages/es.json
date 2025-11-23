@@ -210,6 +210,11 @@
       "backToGame": "Volver al Juego"
     }
   },
+  "cookies": {
+    "message": "Utilizamos cookies para mejorar tu experiencia y analizar el tráfico del sitio. Al hacer clic en 'Aceptar', aceptas nuestro uso de cookies.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
   "footer": {
     "madeWith": "Hecho con",
     "terms": "Términos y Condiciones",
