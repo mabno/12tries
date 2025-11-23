@@ -302,6 +302,15 @@
     "noteText": "The embed version is responsive and works on all devices. Recommended minimum width: 320px. For best experience use 768px+ width.",
     "backToGame": "Back to Game"
   },
+  "metadata": {
+    "title": "12Tries - Daily Word Challenge Game | Guess the Word with AI",
+    "description": "Test your vocabulary with daily word challenges! Use AI-powered semantic similarity to guess words in 12 tries. Play daily word puzzles, compete on the leaderboard, and challenge your friends in this free online word game.",
+    "keywords": "word game, daily word challenge, guess the word, vocabulary game, semantic similarity, AI word game, word puzzle, daily puzzle, word guessing game, 12tries, online word game, free word game",
+    "ogTitle": "12Tries - Daily Word Challenge Game",
+    "ogDescription": "Test your vocabulary with daily word challenges! Use AI-powered semantic similarity to guess words in 12 tries. Play now and compete with friends!",
+    "twitterTitle": "12Tries - Daily Word Challenge Game",
+    "twitterDescription": "Test your vocabulary with daily word challenges! Use AI-powered semantic similarity to guess words in 12 tries."
+  },
   "embed": {
     "gameTitle": "Guess the Word",
     "enterNickname": "Enter a nickname to play",

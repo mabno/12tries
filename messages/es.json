@@ -302,6 +302,15 @@
     "noteText": "La versión embed es responsive y funciona en todos los dispositivos. Ancho mínimo recomendado: 320px. Para la mejor experiencia usa 768px+ de ancho.",
     "backToGame": "Volver al Juego"
   },
+  "metadata": {
+    "title": "12Tries - Desafío Diario de Palabras | Adivina la Palabra con IA",
+    "description": "¡Pon a prueba tu vocabulario con desafíos diarios de palabras! Usa la similitud semántica impulsada por IA para adivinar palabras en 12 intentos. Juega puzzles de palabras diarios, compite en la tabla de posiciones y desafía a tus amigos en este juego de palabras gratuito en línea.",
+    "keywords": "juego de palabras, desafío diario de palabras, adivina la palabra, juego de vocabulario, similitud semántica, juego de palabras IA, puzzle de palabras, puzzle diario, juego de adivinar palabras, 12tries, juego de palabras en línea, juego de palabras gratis",
+    "ogTitle": "12Tries - Desafío Diario de Palabras",
+    "ogDescription": "¡Pon a prueba tu vocabulario con desafíos diarios de palabras! Usa la similitud semántica impulsada por IA para adivinar palabras en 12 intentos. ¡Juega ahora y compite con amigos!",
+    "twitterTitle": "12Tries - Desafío Diario de Palabras",
+    "twitterDescription": "¡Pon a prueba tu vocabulario con desafíos diarios de palabras! Usa la similitud semántica impulsada por IA para adivinar palabras en 12 intentos."
+  },
   "embed": {
     "gameTitle": "Adivina la Palabra",
     "enterNickname": "Ingresa un apodo para jugar",
